@@ -1,0 +1,52 @@
+.decide-register-or-login {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.decide-register-or-login > button,
+.register button,
+.login button {
+    padding: 10px 30px;
+    background: #fff;
+    font-weight: bold;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    background: #0af;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.decide-register-or-login > button:hover,
+.register > button:hover,
+.login > button:hover {
+    background: #0cf;
+}
+
+.register, .login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.register h2, .login h2 {
+    padding: 20px;
+}
+
+.register input, .login input {
+    width: 80%;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.register {
+    display: none;
+}
+
+.login {
+    display: none;
+}
