@@ -1,0 +1,20 @@
+.layout > h1 {
+    background: #08f;
+    color: #fff;
+    padding: 5px;
+  }
+  
+  .nav-layout {
+    display: flex;
+    background: #08f;
+  }
+  
+  .nav-layout > a:hover,
+  .nav-layout > a:link,
+  .nav-layout > a:active,
+  .nav-layout > a:visited {
+    color: white;
+    text-decoration: none;
+    background: #0af;
+    padding: 10px 20px;
+  }
