@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import RegisterOrLogin from './components/RegisterOrLogin/RegisterOrLogin';
+import Contact from './components/Contact/contact';
 
 const App = () => {
 
@@ -8,9 +9,9 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path='/register-or-login' element={<RegisterOrLogin />}/>
+          <Route index element={<RegisterOrLogin />}/>
+          <Route path='/contact' element={<Contact />} />
           {/* <Route index element={<Home />} />
-          <Route index element={<Home />} />
           <Route index element={<Home />} />
           <Route index element={<Home />} /> */}
         </Route>
@@ -19,4 +20,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App;
