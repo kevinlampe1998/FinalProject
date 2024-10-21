@@ -1,10 +1,14 @@
 import './RegisterOrLogin.css';
-import { useRef } from 'react';
+import { useRef, createContext, useContext, useEffect } from 'react';
+import { useNavigate, useNavigation } from 'react-router-dom';
+import { TheContext } from '../../App';
 
 const RegisterOrLogin = () => {
     const decideSection = useRef();
     const registerForm = useRef();
     const loginForm = useRef();
+
+    const { localDataBank, dispatch } = useContext(TheContext);
 
     const openRegister = () => {
         decideSection.current.style.display = 'none';
@@ -16,11 +20,60 @@ const RegisterOrLogin = () => {
         loginForm.current.style.display = 'flex';
     };
 
-    const postRegister = (e) => {
+    const postRegister = async (e) => {
         e.preventDefault();
+
+        const firstName = e.target.children[2].value;
+
+        const lastName = e.target.children[4].value;
+
+        const email = e.target.children[6].value;
+
+        const street = e.target.children[8].value;
+
+        const postalCode = e.target.children[10].value;
+
+        const town = e.target.children[12].value;
+
+        const birthDay = e.target.children[14].value;
+
+        const password = e.target.children[16].value;
+
+        const res = await fetch('http://localhost:3000/users/register', {
+            method: 'POST',
+            body: JSON.stringify({ firstName, lastName, email, street, postalCode, town,
+                birthDay, password }),
+            headers: { 'content-type': 'application/json' }
+        });
+
+        const data = await res.json();
+
+        console.log(data);
     };
-    const postLogin = (e) => {
+
+    const postLogin = async (e) => {
         e.preventDefault();
+        // const navigate = useNavigate();
+
+        const email = e.target.children[2].value;
+        const password = e.target.children[4].value;
+
+        console.log(email, password);
+
+        const res = await fetch('http://localhost:3000/users/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+            headers: { 'content-type': 'application/json' },
+            credentials: 'include'
+        });
+
+        const data = await res.json();
+
+        console.log(data);
+
+        // data.login && navigate('/');
+        dispatch({ type: 'users-login', payload: { email } });
+
     };
 
     return (
@@ -37,29 +90,29 @@ const RegisterOrLogin = () => {
 
                 <h2>Register</h2>
 
-                <label htmlFor="">First Name</label>
-                <input type="text" />
+                <label htmlFor="firstName">First Name</label>
+                <input type="text" id='firstName'/>
 
-                <label htmlFor="">Last Name</label>
-                <input type="text" />
+                <label htmlFor="lastName">Last Name</label>
+                <input type="text" id='lastName'/>
 
-                <label htmlFor="">Email</label>
-                <input type="text" />
+                <label htmlFor="email-register">Email</label>
+                <input type="email" id='email-register'/>
 
-                <label htmlFor="">Street</label>
-                <input type="text" />
+                <label htmlFor="street">Street</label>
+                <input type="text" id='street'/>
 
-                <label htmlFor="">Postal Code</label>
-                <input type="text" />
+                <label htmlFor="postalCode">Postal Code</label>
+                <input type="number" id='postalCode'/>
 
-                <label htmlFor="">Country</label>
-                <input type="text" />
+                <label htmlFor="town">Town</label>
+                <input type="text" id='town'/>
 
-                <label htmlFor="">Birthday</label>
-                <input type="date" />
+                <label htmlFor="birthDay">Birthday</label>
+                <input type="date" id='birthDay'/>
 
-                <label htmlFor="">Password</label>
-                <input type="text" />
+                <label htmlFor="password-register">Password</label>
+                <input type="password" id='password-register'/>
 
                 <button type='submit'>Submit</button>
 
@@ -69,11 +122,11 @@ const RegisterOrLogin = () => {
 
                 <h2>Login</h2>
 
-                <label htmlFor="">Email</label>
-                <input type="text" />
+                <label htmlFor="email-login">Email</label>
+                <input type="text" id='email-login'/>
 
-                <label htmlFor="">Password</label>
-                <input type="text" />
+                <label htmlFor="password-login">Password</label>
+                <input type="password" id='password-login'/>
 
                 <button type='submit'>Submit</button>
 
