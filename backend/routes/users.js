@@ -12,6 +12,9 @@ router.post('/register', async (req, res) => {
     try {
         const { firstName, lastName, email, street, postalCode, town, birthDay, password } = req.body;
         console.log(req.body);
+
+        if (!firstName || !lastName || !email || !street || !postalCode || !town || !birthDay || !password) {
+            res.json({ message: 'One of the inputs is missing!' }); return; };
     
         const hash = await bcrypt.hash(password, process.env.SALT);
         console.log(hash);
@@ -23,8 +26,9 @@ router.post('/register', async (req, res) => {
         console.log(newUser);
 
         const savedUser = await newUser.save();
+        savedUser.hash = undefined;
     
-        res.json({ message: 'User successful registered!' });
+        res.json({ message: 'User successful registered!', savedUser });
         return;
 
     } catch (err) {
@@ -39,8 +43,12 @@ router.post('/login', async (req, res) => {
         const { email, password } = req.body;
         console.log(email, password);
 
+        if (!email, !password) { res.json({ message: 'Email or Password is wrong!' }); return; };
+
         const searchedUser = await User.findOne({ email });
         console.log(searchedUser);
+
+        if (!searchedUser) { res.json({ message: 'User not found!' }) };
 
         const comparePassword = await bcrypt.compare(password, searchedUser.hash);
         console.log(comparePassword);
@@ -51,8 +59,10 @@ router.post('/login', async (req, res) => {
             { expiresIn: '1h' });
         console.log(token);
 
+        searchedUser.hash = undefined;
+
         res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 3_600_000, sameSite: 'Strict' });
-        res.json({ message: 'User successful logged in!', login: true , userId: searchedUser._id });
+        res.json({ message: 'User successful logged in!', login: true , searchedUser });
         return;
 
     } catch (err) {
@@ -75,7 +85,10 @@ router.post('/login-at-start', async (req, res) => {
         const searchedUser = await User.findOne({ _id: verify.userId });
         console.log(searchedUser);
 
-        res.json({ message: 'Cookies are correct!', login: true , userId: verify.userId});
+        searchedUser.hash = undefined;
+        console.log(searchedUser);
+
+        res.json({ message: 'Cookies are correct!', login: true, searchedUser });
         return;
 
     } catch (err) {

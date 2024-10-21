@@ -1,6 +1,6 @@
 import './RegisterOrLogin.css';
 import { useRef, createContext, useContext, useEffect } from 'react';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { TheContext } from '../../App';
 
 const RegisterOrLogin = () => {
@@ -49,6 +49,9 @@ const RegisterOrLogin = () => {
         const data = await res.json();
 
         console.log(data);
+
+        dispatch({ type: 'users-login', payload: data.savedUser });
+
     };
 
     const postLogin = async (e) => {
@@ -72,7 +75,7 @@ const RegisterOrLogin = () => {
         console.log(data);
 
         // data.login && navigate('/');
-        dispatch({ type: 'users-login', payload: { email } });
+        dispatch({ type: 'users-login', payload: data.searchedUser });
 
     };
 

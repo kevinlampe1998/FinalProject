@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import RegisterOrLogin from './components/RegisterOrLogin/RegisterOrLogin';
 import Contact from './components/Contact/contact';
+import TeamProject from './components/Teamproject/TeamProject.jsx';
+import Home from './components/Home/Home.jsx';
 
 const initialState = {
   user: undefined
@@ -27,14 +29,15 @@ const App = () => {
 
       const res = await fetch('http://localhost:3000/users/login-at-start', {
         method: 'POST',
-        // headers: { 'content-type': 'application/json' },
         credentials: 'include'
       });
   
-
-      // const data = await res.json();
+      const data = await res.json();
   
-      // console.log(data);
+      console.log(data);
+
+      dispatch({ type: 'users-login', payload: data.searchedUser });
+
     } catch (err) {
       console.log(err);
     }
@@ -53,8 +56,10 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<RegisterOrLogin />}/>
+            {/* <Route index element={<RegisterOrLogin />}/> */}
+            <Route path='/' element={<Home />} />
             <Route path='/contact' element={<Contact />} />
+            <Route path='/team' element={<TeamProject />} />
             {/* <Route index element={<Home />} />
             <Route index element={<Home />} />
             <Route index element={<Home />} /> */}
