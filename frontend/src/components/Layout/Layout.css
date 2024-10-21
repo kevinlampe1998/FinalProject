@@ -1,4 +1,4 @@
-.layout > h1 {
+.project-name {
     background: #08f;
     color: #fff;
     padding: 5px;
@@ -7,12 +7,18 @@
   .nav-layout {
     display: flex;
     background: #08f;
+    flex-wrap: wrap;
+  }
+
+  .nav-layout li {
+    display: flex;
+    justify-content: center;
   }
   
-  .nav-layout > a:hover,
-  .nav-layout > a:link,
-  .nav-layout > a:active,
-  .nav-layout > a:visited {
+  .nav-layout a:hover,
+  .nav-layout a:link,
+  .nav-layout a:active,
+  .nav-layout a:visited {
     color: white;
     text-decoration: none;
     background: #0af;
