@@ -13,9 +13,9 @@ const TeamProject = () => {
             image: "https://example.com/kevin.jpg", // Bild von Kevin
         },
         {
-            name: "Anna",
+            name: "Ralf",
             role: "UI/UX Designer",
-            image: "https://example.com/anna.jpg", // Bild von Anna
+            image: "https://example.com/anna.jpg", // Bild von Ralf
         },
     ];
 
