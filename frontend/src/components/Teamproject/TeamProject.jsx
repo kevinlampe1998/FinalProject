@@ -5,17 +5,17 @@ const TeamProject = () => {
         {
             name: "Philipp",
             role: "Frontend Developer",
-            image: "https://example.com/philipp.jpg", // Bild von Philipp
+            image: "/images/philipp.jpg", // Lokaler Pfad im public-Ordner
         },
         {
             name: "Kevin",
             role: "Backend Developer",
-            image: "https://example.com/kevin.jpg", // Bild von Kevin
+            image: "/images/kevin.jpg", // Lokaler Pfad im public-Ordner
         },
         {
             name: "Ralf",
             role: "UI/UX Designer",
-            image: "https://example.com/anna.jpg", // Bild von Ralf
+            image: "/images/Ralf.jpg", // Lokaler Pfad im public-Ordner
         },
     ];
 
