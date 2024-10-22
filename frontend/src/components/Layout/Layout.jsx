@@ -3,6 +3,7 @@ import "./Layout.css";
 import { useState, useContext } from "react";
 import RegisterOrLogin from "../RegisterOrLogin/RegisterOrLogin";
 import { TheContext } from "../../App";
+import HelpChat from "../HelpChat/HelpChat";
 
 const Layout = () => {
     const { localDataBank, dispatch } = useContext(TheContext);
@@ -10,27 +11,23 @@ const Layout = () => {
     return (
         <div className="layout">
             <header>
-                <h1 className="project-name">End Project</h1>
+                <h1 className="project-name">Final Project</h1>
 
                 {
                     localDataBank.user ? 
                         <nav className="nav-layout">
-                            {/* <li> */}
-                                {/* <Link to="/">Register/Login</Link> */}
-                            {/* </li> */}
                             <li>
                                 <Link to="/">Home</Link>
                             </li>
-                            {/* <li>
-                                <Link to="/about">About</Link>
-                            </li> */}
                             <li>
                                 <Link to="/contact">Contact</Link>
                             </li>
                             <li>
                                 <Link to="/team">Team</Link>
                             </li>
-                            {/* <Link to='/home'>Home</Link> */}
+                            <li>
+                                <Link to='/products'>Products</Link>
+                            </li>
                         </nav>
                     : <RegisterOrLogin/> 
                 }
@@ -47,7 +44,7 @@ const Layout = () => {
                             <Link to="/contact">Contact</Link>
                         </footer>
                 }
-
+            <HelpChat/>
         </div>
     );
 };
