@@ -1,6 +1,12 @@
 .help-chat {
-    position: fixed;
-    top: 80%;
-    right: 5%;
-    background: yellow;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.write-a-question {
+    display: none;
+    flex-direction: column;
 }

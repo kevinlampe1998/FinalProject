@@ -1,12 +1,22 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./Layout.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import RegisterOrLogin from "../RegisterOrLogin/RegisterOrLogin";
 import { TheContext } from "../../App";
-import HelpChat from "../HelpChat/HelpChat";
 
 const Layout = () => {
     const { localDataBank, dispatch } = useContext(TheContext);
+    const helpPopUp = useRef();
+    const navigate = useNavigate();
+
+    const hideHelp = () => {
+        helpPopUp.current.style.display = 'none';
+    };
+
+    const navigateToHelp = () => {
+        navigate('/help-chat');
+        helpPopUp.current.style.display = 'none';
+    };
 
     return (
         <div className="layout">
@@ -44,7 +54,14 @@ const Layout = () => {
                             <Link to="/contact">Contact</Link>
                         </footer>
                 }
-            <HelpChat/>
+
+                <div className="help-chat-pop-up" ref={helpPopUp}>
+                    <h5>Do you need help?</h5>
+                    <div>
+                        <button onClick={hideHelp}>No, please hide</button>
+                        <button onClick={navigateToHelp}>Yes, please open help chat</button>
+                    </div>
+                </div>
         </div>
     );
 };

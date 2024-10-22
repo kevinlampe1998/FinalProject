@@ -8,6 +8,7 @@ import TeamProject from './components/Teamproject/TeamProject.jsx';
 import Home from './components/Home/Home.jsx';
 import SetProduct from './components/SetProduct/SetProduct.jsx';
 import Products from './components/Products/Products.jsx';
+import HelpChat from './components/HelpChat/HelpChat.jsx';
 
 const initialState = {
   user: undefined
@@ -58,6 +59,7 @@ const App = () => {
             <Route path='/team' element={<TeamProject />} />
             <Route path='/products' element={<Products />} />
             <Route path='/set-product' element={<SetProduct />} />
+            <Route path='/help-chat' element={<HelpChat />} />
 
           </Route>
 
