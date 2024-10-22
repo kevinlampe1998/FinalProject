@@ -10,10 +10,6 @@ const SetProduct = () => {
 
     const { localDataBank, dispatch } = useContext(TheContext);
 
-    useEffect(() => {
-        console.log(localDataBank.user._id);
-    });
-
     const postProduct = async (event) => {
         event.preventDefault();
 
@@ -22,16 +18,12 @@ const SetProduct = () => {
 
         
         const product_name = setProductForm.current.children[2].value;
-        console.log(product_name);
         
         const description = setProductForm.current.children[6].value;
-        console.log(description);
 
         const price = setProductForm.current.children[8].value;
-        console.log(price);
 
         const quantity = setProductForm.current.children[10].value;
-        console.log(quantity);
 
 
 
@@ -45,7 +37,6 @@ const SetProduct = () => {
 
         const data = await res.json();
 
-        console.log(data);
         message.current.style.color = 'green';        
         message.current.innerHTML = data.message;
 
@@ -54,19 +45,14 @@ const SetProduct = () => {
             return;
         }
 
-        console.log(data.savedProduct);
-
         if (data.savedProduct) {
 
-            console.log(formData);
-        
             const picRes = await fetch(`http://localhost:3000/images/${data.savedProduct._id}`, {
                 method: 'POST',
                 body: formData
             });
         
             const picData = await picRes.json();
-            console.log(picData);
 
             picMessage.current.style.color = 'green';
             picMessage.current.innerHTML = picData.message;

@@ -24,3 +24,18 @@
     background: #0af;
     padding: 10px 20px;
   }
+
+  .help-chat-pop-up {
+    background: yellow;
+    position: fixed;
+    top: 70%;
+    right: 0;
+    padding: 20px;
+  }
+
+  .help-chat-pop-up button {
+    padding: 5px 10px;
+    background: #fff;
+    border: none;
+    margin: 5px;
+  }
