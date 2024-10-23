@@ -1,6 +1,6 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./Layout.css";
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import RegisterOrLogin from "../RegisterOrLogin/RegisterOrLogin";
 import { TheContext } from "../../App";
 
@@ -10,7 +10,7 @@ const Layout = () => {
     const navigate = useNavigate();
 
     const hideHelp = () => {
-        helpPopUp.current.style.display = 'none';
+
     };
 
     const navigateToHelp = () => {
