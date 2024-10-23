@@ -29,6 +29,10 @@ const Layout = () => {
         dispatch({ type: 'users-logout' });
     };
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
         <div className="layout">
             <header>
@@ -69,6 +73,7 @@ const Layout = () => {
                         <footer>
                             {/* <Link to='/'>About</Link> */}
                             <Link to="/contact">Contact</Link>
+                            <Link to="/rating">Rating</Link>
                         </footer>
                 }
 

@@ -39,3 +39,20 @@
     border: none;
     margin: 5px;
   }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    background: #0af;
+    height: 500px;
+    margin-top: 300px;
+  }
+
+  footer a:hover,
+  footer a:active,
+  footer a:link,
+  footer a:visited {
+    color: #fff;
+    text-decoration: none;
+    padding: 20px;
+  }
