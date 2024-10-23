@@ -18,6 +18,17 @@ const Layout = () => {
         helpPopUp.current.style.display = 'none';
     };
 
+    const logout = async () => {
+        const res = await fetch('http://localhost:3000/users/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+        const data = await res.json();
+        console.log(data.message);
+
+        dispatch({ type: 'users-logout' });
+    };
+
     return (
         <div className="layout">
             <header>
@@ -37,6 +48,12 @@ const Layout = () => {
                             </li>
                             <li>
                                 <Link to='/products'>Products</Link>
+                            </li>
+                            <li>
+                                <a onClick={logout} href="#">Logout</a>
+                            </li>
+                            <li>
+                                <a href="#">{ localDataBank.user.firstName }</a>
                             </li>
                         </nav>
                     : <RegisterOrLogin/> 

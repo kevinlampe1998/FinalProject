@@ -17,8 +17,12 @@ const initialState = {
 const reducer = (state, action) => {
   if (action.type === 'users-register' || action.type === 'users-login') {
     return { user: action.payload };
-  }            <Route path='/team' element={<TeamProject />} />
+  }
 
+  if (action.type === 'users-logout') {
+    return { user: undefined };
+  }
+  return state;
 };
 
 export const TheContext = createContext();
