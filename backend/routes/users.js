@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
 
         searchedUser.hash = undefined;
 
-        res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 3_600_000, sameSite: 'Strict' });
+        res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 3_600_000, sameSite: 'Strict', path: '/' });
         res.json({ message: 'User successful logged in!', login: true , searchedUser });
         return;
 
@@ -93,6 +93,24 @@ router.post('/login-at-start', async (req, res) => {
 
     } catch (err) {
         console.log('Error on POST /users/login-at-start', err);
+        res.json('Something went wrong!');
+        return;
+    }
+});
+
+router.post('/logout', async (req, res) => {
+    try {
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Strict',
+            path: '/'
+        });
+        res.json({ message: 'Cookie deleted!' });
+        return;
+
+    } catch (err) {
+        console.log('Error on POST /users/logout', err);
         res.json('Something went wrong!');
         return;
     }
