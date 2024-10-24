@@ -9,6 +9,7 @@ const Products = () => {
     const getProducts = async () => {
         const res = await fetch('http://localhost:3000/products');
         const data = await res.json();
+
         setProducts(data.products);
     };
 
@@ -18,17 +19,24 @@ const Products = () => {
 
     return (
         <div className="products">
-            <button onClick={() => navigate('/set-product')}>Set Product to sell</button>
+            <button onClick={() => navigate('/set-product')}>Set product to sell</button>
 
             {
                 products && products.map(product => (
                     <div key={product._id} className='product-container'>
+                        <h4>Product: {product.product_name}</h4>
                         <img src={`${product.main_picture?.url}`} alt={`product ${product.product_name}`}/>
                         <div>
-                            <h4>{product.product_name}</h4>
-                            <div>{product.description}</div>
-                            <div>{product.price}</div>
-                            <div>{product.quantity}</div>
+                            <div>Seller: {product.seller_name ?
+                                product.seller_name : 'Anonym'}</div>
+                            <div>Description: {product.description}</div>
+                            <div>Price: {product.price}</div>
+                            <div>Quantity: {product.quantity}</div>
+                            <div>
+                                <button onClick={() => navigate(`/product/${product._id}`)}>Show me the product</button>
+                                <button>Add to Wishlist</button>
+                                <button>Buy</button>
+                            </div>
                         </div>
                     </div>
                 ))

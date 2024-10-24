@@ -1,14 +1,16 @@
 import { useReducer, createContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Layout from './components/Layout/Layout';
-import RegisterOrLogin from './components/RegisterOrLogin/RegisterOrLogin';
-import Contact from './components/Contact/contact';
+import Layout from './components/Layout/Layout.jsx';
+import Contact from './components/Contact/Contact.jsx';
 import TeamProject from './components/Teamproject/TeamProject.jsx';
 import Home from './components/Home/Home.jsx';
 import SetProduct from './components/SetProduct/SetProduct.jsx';
-import Products from './components/Products/Products.jsx';
 import HelpChat from './components/HelpChat/HelpChat.jsx';
+import Rating from './components/Rating/Rating.jsx';
+import Products from './components/Products/Products.jsx';
+import Product from './components/Product/Product.jsx';
+
 
 const initialState = {
   user: undefined
@@ -16,11 +18,11 @@ const initialState = {
 
 const reducer = (state, action) => {
   if (action.type === 'users-register' || action.type === 'users-login') {
-    return { user: action.payload };
+    return { ...state, user: action.payload };
   }
 
   if (action.type === 'users-logout') {
-    return { user: undefined };
+    return { ...state, user: undefined };
   }
   return state;
 };
@@ -60,10 +62,13 @@ const App = () => {
 
             <Route path='/' element={<Home />} />
             <Route path='/contact' element={<Contact />} />
+
             <Route path='/team' element={<TeamProject />} />
             <Route path='/products' element={<Products />} />
             <Route path='/set-product' element={<SetProduct />} />
+            <Route path='/product/:_id' element={<Product />} />
             <Route path='/help-chat' element={<HelpChat />} />
+            <Route path='/rating' element={<Rating />} />
 
           </Route>
 
