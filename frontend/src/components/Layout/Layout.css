@@ -8,6 +8,7 @@
     display: flex;
     background: #08f;
     flex-wrap: wrap;
+    justify-content: flex-start;
   }
 
   .nav-layout li {
@@ -25,12 +26,19 @@
     padding: 10px 20px;
   }
 
+  .logout {
+      background: red;
+      color: red;
+  }
+
   .help-chat-pop-up {
     background: yellow;
     position: fixed;
     top: 70%;
     right: 0;
     padding: 20px;
+    border-radius: 20px;
+    display: none;
   }
 
   .help-chat-pop-up button {
@@ -38,6 +46,7 @@
     background: #fff;
     border: none;
     margin: 5px;
+    color: #333;
   }
 
   footer {

@@ -1,10 +1,11 @@
 import './HelpChat.css';
-import { useRef, useContext } from 'react';
+import { useRef, useState, useContext, useEffect } from 'react';
 import { TheContext } from '../../App';
 
 const HelpChat = () => {
     const writeAQuestion = useRef();
     const { localDataBank, dispatch } = useContext(TheContext);
+    const [chat, setChat] = useState();
 
     const showWriteQuest = (event) => {
         event.preventDefault();
@@ -25,6 +26,22 @@ const HelpChat = () => {
         });
     };
 
+    const getChat = async () => {
+        const res = await fetch(`http://localhost:3000/help-chat/${localDataBank.user._id}`);
+        const data = await res.json();
+        console.log(data);
+
+        setChat(data.helpChat.chat);
+    };
+
+    useEffect(() => {
+        getChat();
+    }, []);
+
+    useEffect(() => {
+        console.log('chat', chat);
+    }, [chat]);
+
     return (
         <form className="help-chat">
             Help Chat
@@ -41,6 +58,16 @@ const HelpChat = () => {
                 <span>Write a question:</span>
                 <input type="text" />
                 <button onClick={sendQuest}>Send</button>
+            </div>
+            
+            <div>
+                {
+                    chat && chat.map(message => (
+                        <div key={message._id}>
+                            {message.message}
+                        </div>
+                    ))
+                }
             </div>
         </form>
     );
