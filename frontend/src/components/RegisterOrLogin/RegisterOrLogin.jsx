@@ -48,15 +48,12 @@ const RegisterOrLogin = () => {
 
         const data = await res.json();
 
-        console.log(data);
-
         dispatch({ type: 'users-login', payload: data.savedUser });
 
     };
 
     const postLogin = async (e) => {
         e.preventDefault();
-        // const navigate = useNavigate();
 
         const email = e.target.children[2].value;
         const password = e.target.children[4].value;
@@ -72,9 +69,6 @@ const RegisterOrLogin = () => {
 
         const data = await res.json();
 
-        console.log(data);
-
-        // data.login && navigate('/');
         dispatch({ type: 'users-login', payload: data.searchedUser });
 
     };
