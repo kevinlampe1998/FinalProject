@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Star } from "lucide-react";
 
-const StarRating = () => {
+const Rating = () => {
     const [rating, setRating] = useState(0);
     const [hoveredRating, setHoveredRating] = useState(0);
     const [comment, setComment] = useState("");
@@ -113,6 +113,6 @@ const StarRating = () => {
     );
 };
 
-export default StarRating;
+export default Rating;
 
 //test//
