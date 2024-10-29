@@ -72,7 +72,6 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log(email, password);
 
         if ((!email, !password)) {
             res.json({ message: "Email or Password is wrong!" });
@@ -80,7 +79,6 @@ router.post("/login", async (req, res) => {
         }
 
         const searchedUser = await User.findOne({ email });
-        console.log(searchedUser);
 
         if (!searchedUser) {
             res.json({ message: "User not found!" });
@@ -91,7 +89,6 @@ router.post("/login", async (req, res) => {
             password,
             searchedUser.hash
         );
-        console.log(comparePassword);
 
         if (!comparePassword) {
             res.json({ message: "Password wrong!" });
@@ -103,7 +100,6 @@ router.post("/login", async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
         );
-        console.log(token);
 
         searchedUser.hash = undefined;
 
@@ -128,7 +124,6 @@ router.post("/login", async (req, res) => {
 
 router.post("/login-at-start", async (req, res) => {
     try {
-        console.log("req.cookies", req.cookies);
 
         if (!req.cookies || !req.cookies.token) {
             res.json({ message: "No cookie" });
@@ -136,13 +131,20 @@ router.post("/login-at-start", async (req, res) => {
         }
 
         const verify = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
-        console.log("verify", verify);
+
+        if (!verify) {
+            res.json({ message: 'Cookie verification unsuccessful!' });
+            return;
+        };
 
         const searchedUser = await User.findOne({ _id: verify.userId });
-        console.log("searchedUser", searchedUser);
+
+        if (!searchedUser) {
+            res.json({ message: 'Token: User not found!' });
+            return;
+        };
 
         searchedUser.hash = undefined;
-        console.log("searchedUser", searchedUser);
 
         res.json({
             message: "Cookies are correct!",

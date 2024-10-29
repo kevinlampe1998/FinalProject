@@ -47,6 +47,7 @@ const HelpChat = () => {
             Help Chat
 
             <span>How can I help you</span>
+            {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, repudiandae? */}
 
             <div>
                 <button>1. Option</button>

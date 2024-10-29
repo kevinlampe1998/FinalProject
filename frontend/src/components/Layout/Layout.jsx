@@ -3,6 +3,7 @@ import "./Layout.css";
 import { useState, useContext, useRef, useEffect } from "react";
 import RegisterOrLogin from "../RegisterOrLogin/RegisterOrLogin";
 import { TheContext } from "../../App";
+import ShoppingCartLogo from '/svg/shopping-cart.svg';
 
 const Layout = () => {
     const { localDataBank, dispatch } = useContext(TheContext);
@@ -11,21 +12,12 @@ const Layout = () => {
 
     const hideHelp = () => {
         localStorage.setItem('hideHelpPopUp', new Date().getTime());
+        helpPopUp.current.style.display = 'none';
     };
 
     const navigateToHelp = () => {
         navigate('/help-chat');
         helpPopUp.current.style.display = 'none';
-    };
-
-    const logout = async () => {
-        const res = await fetch('http://localhost:3000/users/logout', {
-            method: 'POST',
-            credentials: 'include'
-        });
-        const data = await res.json();
-
-        dispatch({ type: 'users-logout' });
     };
 
     const scrollToTop = () => {
@@ -45,26 +37,27 @@ const Layout = () => {
     return (
         <div className="layout">
             <header>
-                <h1 className="project-name">Final Project</h1>
+                <h1 className="project-name">
+                    <div>Tech Oase</div>
+                </h1>
 
                 {
                     localDataBank.user ? 
                         <nav className="nav-layout">
                             <li>
-                                <Link to="/">Home</Link>
+                                <Link to="/">New in Store</Link>
                             </li>
                             <li>
-                                <Link to="/team">Team</Link>
+                                <Link to='/used-items'>Used Items</Link>
                             </li>
                             <li>
-                                <Link to='/products'>Products</Link>
+                                <Link to='/user-profile'>{ localDataBank.user.firstName }</Link>
                             </li>
-                            <li>
-                                <a style={{ background: '#f50' }} onClick={logout} href="#">Logout</a>
-                            </li>
-                            <li>
-                                <a href="#">{ localDataBank.user.firstName }</a>
-                            </li>
+                            {/* <li>
+                                <Link to='/shopping-cart'>
+                                    <img src="/svg/shopping-cart.svg" alt="shopping-cart-logo" className="shopping-cart-logo"/>
+                                </Link>
+                            </li> */}
                         </nav>
                     : <RegisterOrLogin/> 
                 }
@@ -77,10 +70,10 @@ const Layout = () => {
                 {
                     localDataBank.user &&
                         <footer>
-                            {/* <Link to='/'>About</Link> */}
                             <Link to="/contact" onClick={scrollToTop}>Contact</Link>
                             <Link to="/rating" onClick={scrollToTop}>Rating</Link>
                             <Link to="/help-chat" onClick={scrollToTop}>Help-Chat</Link>
+                            <Link to="/team" onClick={scrollToTop}>Team</Link>
                             <Link>FAQ</Link>
                         </footer>
                 }
