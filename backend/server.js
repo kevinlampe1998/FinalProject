@@ -5,9 +5,12 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 
 import usersRoute from './routes/users.js';
-import productsRoute from './routes/products.js';
+import usedItemsRoute from './routes/usedItems.js';
+import usedItemRoute from './routes/usedItem.js';
 import imagesRoute from './routes/images.js';
 import helpChatRoute from './routes/helpChat.js';
+import newInStoreRoute from './routes/newInStore.js';
+import shoppingCartRoute from './routes/usedShoppingCart.js';
 
 
 dotenv.config();
@@ -27,9 +30,13 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use('/users', usersRoute);
-app.use('/products', productsRoute);
+app.use('/used-items', usedItemsRoute);
+app.use('/used-item', usedItemRoute);
 app.use('/images', imagesRoute);
 app.use('/help-chat', helpChatRoute);
+app.use('/new-in-store', newInStoreRoute);
+app.use('/used-shopping-cart', shoppingCartRoute);
+
 
 
 app.listen(env.PORT, () => {

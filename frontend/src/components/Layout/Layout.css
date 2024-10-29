@@ -1,17 +1,31 @@
+.layout header {
+
+  background: linear-gradient(15deg, #0af, #000);
+}
+
 .project-name {
-    background: #08f;
-    color: #fff;
+    color: #0af;
     padding: 5px;
+    width: 100%;
+    font-size: 3rem;
+    text-align: center;
+  }
+  
+  .project-name div {
+    font-family: serif;
+    /* text-shadow: -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333; */
+    /* transform: scaleX(1.5); */
+    /* translate: 120px 0; */
   }
   
   .nav-layout {
     display: flex;
-    background: #08f;
+    /* background: #000; */
     flex-wrap: wrap;
     justify-content: flex-start;
   }
 
-  .nav-layout li {
+  .nav-layout li { 
     display: flex;
     justify-content: center;
   }
@@ -24,6 +38,8 @@
     text-decoration: none;
     background: #0af;
     padding: 10px 20px;
+    border: 2px solid #0cf;
+    margin: 1px;
   }
 
   .logout {
@@ -64,4 +80,8 @@
     color: #fff;
     text-decoration: none;
     padding: 20px;
+  }
+
+  .shopping-cart-logo {
+    width: 25px;
   }

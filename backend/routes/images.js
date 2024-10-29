@@ -6,7 +6,7 @@ import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import multer from 'multer';
 
 import Image from '../models/image.js';
-import Product from '../models/product.js';
+import Product from '../models/usedItem.js';
 
 import express from 'express';
 const router = express.Router();

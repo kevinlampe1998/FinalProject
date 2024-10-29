@@ -3,14 +3,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout.jsx';
 import Contact from './components/Contact/Contact.jsx';
-import TeamProject from './components/Teamproject/TeamProject.jsx';
-import Home from './components/Home/Home.jsx';
-import SetProduct from './components/SetProduct/SetProduct.jsx';
+import TeamProject from './components/TeamProject/TeamProject.jsx';
+import NewInStore from './components/NewInStore/NewInStore.jsx';
+import SetUsedProduct from './components/SetUsedProduct/SetUsedProduct.jsx';
 import HelpChat from './components/HelpChat/HelpChat.jsx';
 import Rating from './components/Rating/Rating.jsx';
-import Products from './components/Products/Products.jsx';
-import Product from './components/Product/Product.jsx';
-
+import UsedItems from './components/UsedItems/UsedItems.jsx';
+import UsedItem from './components/UsedItem/UsedItem.jsx';
+import UserProfile from './components/UserProfile/UserProfile.jsx';
 
 const initialState = {
   user: undefined
@@ -60,13 +60,14 @@ const App = () => {
 
           <Route path="/" element={<Layout />}>
 
-            <Route path='/' element={<Home />} />
-            <Route path='/contact' element={<Contact />} />
+            <Route path='/' element={<NewInStore />} />
+            <Route path='/used-items' element={<UsedItems />} />
+            <Route path='/user-profile' element={<UserProfile />} />
 
+            <Route path='/contact' element={<Contact />} />
             <Route path='/team' element={<TeamProject />} />
-            <Route path='/products' element={<Products />} />
-            <Route path='/set-product' element={<SetProduct />} />
-            <Route path='/product/:_id' element={<Product />} />
+            <Route path='/set-used-item' element={<SetUsedProduct />} />
+            <Route path='/used-item/:_id' element={<UsedItem />} />
             <Route path='/help-chat' element={<HelpChat />} />
             <Route path='/rating' element={<Rating />} />
 
