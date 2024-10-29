@@ -1,6 +1,7 @@
 .layout header {
 
   background: linear-gradient(15deg, #0af, #000);
+  background: #000;
 }
 
 .project-name {
@@ -34,12 +35,13 @@
   .nav-layout a:link,
   .nav-layout a:active,
   .nav-layout a:visited {
+    margin: 5px 1px;
     color: white;
     text-decoration: none;
     background: #0af;
     padding: 10px 20px;
     border: 2px solid #0cf;
-    margin: 1px;
+    border-radius: 10px;
   }
 
   .logout {
