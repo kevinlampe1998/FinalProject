@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Mail, Send, Trash2, User, Package } from "lucide-react";
 import "./MailSystem.css";
 
