@@ -6,7 +6,7 @@ import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import multer from 'multer';
 
 import Image from '../models/image.js';
-import Product from '../models/usedItem.js';
+import UsedItem from '../models/usedItem.js';
 
 import express from 'express';
 const router = express.Router();
@@ -34,18 +34,20 @@ const upload = multer({ storage });
 router.post('/:_id', upload.single('file'), async (req, res) => {
     try {
         const { _id } = req.params;
-
+        console.log('_id', _id);
     
         const newImage = new Image({
             url: req.file.path,
             public_id: req.file.filename
         });
+        console.log('newImage', newImage);
     
         const savedImage = await newImage.save();
+        console.log('savedImage', savedImage);
     
-        const product = await Product.updateOne({ _id }, {
-            $push: { main_picture: savedImage }
-        });
+        const product = await UsedItem.updateOne({ _id },
+            { main_picture: savedImage });
+        console.log('product', product);
     
         res.json({ message: 'Image successful saved!',
             image: savedImage });
