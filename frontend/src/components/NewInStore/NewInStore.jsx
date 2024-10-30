@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <section className="home">
-        <h1>Welcome to our Tech Oase</h1>
+        <h1>Welcome to Tech Oase</h1>
         <ThreeDExample/>
         {/* <div className="home-pics">
         {

@@ -1,6 +1,12 @@
+.layout {
+  background: #0af;
+}
+
 .layout header {
 
   background: linear-gradient(15deg, #0af, #000);
+  /* background: #000; */
+  border-bottom: 5px solid #0af;
 }
 
 .project-name {
@@ -13,35 +19,31 @@
   
   .project-name div {
     font-family: serif;
-    /* text-shadow: -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333; */
-    /* transform: scaleX(1.5); */
-    /* translate: 120px 0; */
   }
   
   .nav-layout {
     display: flex;
-    /* background: #000; */
     flex-wrap: wrap;
-    justify-content: flex-start;
-  }
-
-  .nav-layout li { 
-    display: flex;
-    justify-content: center;
+    padding-left: 10px;
   }
   
-  .nav-layout a:hover,
   .nav-layout a:link,
   .nav-layout a:active,
   .nav-layout a:visited {
+    margin: 10px 2px;
     color: white;
     text-decoration: none;
-    background: #0af;
+    background: #000;
     padding: 10px 20px;
     border: 2px solid #0cf;
-    margin: 1px;
+    border-radius: 10px;
   }
 
+  .nav-layout a:hover {
+    background: #0af;
+
+  }
+  
   .logout {
       background: red;
       color: red;
@@ -68,7 +70,7 @@
   footer {
     display: flex;
     flex-direction: column;
-    background: #0af;
+    background: #0bf;
     height: 500px;
     margin-top: 300px;
   }

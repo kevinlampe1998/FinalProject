@@ -13,7 +13,8 @@ import UsedItem from './components/UsedItem/UsedItem.jsx';
 import UserProfile from './components/UserProfile/UserProfile.jsx';
 
 const initialState = {
-  user: undefined
+  user: undefined,
+  admin: undefined
 };
 
 const reducer = (state, action) => {
@@ -24,6 +25,10 @@ const reducer = (state, action) => {
   if (action.type === 'users-logout') {
     return { ...state, user: undefined };
   }
+  if (action.type === 'admin-login') {
+    return { ...state, admin: action.payload };
+  }
+
   return state;
 };
 

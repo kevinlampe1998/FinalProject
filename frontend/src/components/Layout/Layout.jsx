@@ -4,6 +4,7 @@ import { useState, useContext, useRef, useEffect } from "react";
 import RegisterOrLogin from "../RegisterOrLogin/RegisterOrLogin";
 import { TheContext } from "../../App";
 import ShoppingCartLogo from '/svg/shopping-cart.svg';
+import Admin from "../Admin/Admin.jsx";
 
 const Layout = () => {
     const { localDataBank, dispatch } = useContext(TheContext);
@@ -34,6 +35,10 @@ const Layout = () => {
         (helpPopUp.current.style.display = 'none');
     }, []);
 
+    useEffect(() => {
+        console.log(localDataBank.admin);
+    });
+
     return (
         <div className="layout">
             <header>
@@ -44,27 +49,24 @@ const Layout = () => {
                 {
                     localDataBank.user ? 
                         <nav className="nav-layout">
-                            <li>
                                 <Link to="/">New in Store</Link>
-                            </li>
-                            <li>
                                 <Link to='/used-items'>Used Items</Link>
-                            </li>
-                            <li>
                                 <Link to='/user-profile'>{ localDataBank.user.firstName }</Link>
-                            </li>
                             {/* <li>
                                 <Link to='/shopping-cart'>
                                     <img src="/svg/shopping-cart.svg" alt="shopping-cart-logo" className="shopping-cart-logo"/>
                                 </Link>
                             </li> */}
                         </nav>
-                    : <RegisterOrLogin/> 
+                    : localDataBank.admin ?
+                        <></>
+                    : <RegisterOrLogin/>
+                        
                 }
             </header>
 
                 {
-                    localDataBank.user && <Outlet/>
+                    localDataBank.user ? <Outlet/> : localDataBank.admin ? <Admin /> : <></>
                 }
 
                 {
