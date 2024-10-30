@@ -2,7 +2,9 @@ import express from "express";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+
 import User from "../models/user.js";
+import Admin from '../models/admin.js';
 
 const router = express.Router();
 
@@ -76,6 +78,14 @@ router.post("/login", async (req, res) => {
         if ((!email, !password)) {
             res.json({ message: "Email or Password is wrong!" });
             return;
+        }
+
+        const admin = await Admin.findOne({ email });
+        if (admin) {
+            password === admin.password && console.log('Admin');
+            password === admin.password && res.json({ message: 'Admin logged in!', admin });
+            if (password === admin.password) return;
+
         }
 
         const searchedUser = await User.findOne({ email });

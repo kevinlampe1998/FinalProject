@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.route('/').post(async (req, res) => {
   try {
-    console.log(req.body);
     const { productId, userId } = req.body;
 
     const existShoppingCart = await usedShoppingCart.findOne({ user_id: userId });

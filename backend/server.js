@@ -11,6 +11,7 @@ import imagesRoute from './routes/images.js';
 import helpChatRoute from './routes/helpChat.js';
 import newInStoreRoute from './routes/newInStore.js';
 import usedShoppingCartRoute from './routes/usedShoppingCart.js';
+import adminRoute from './routes/admin.js';
 
 
 dotenv.config();
