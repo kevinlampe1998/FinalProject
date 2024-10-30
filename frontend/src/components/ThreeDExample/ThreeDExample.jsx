@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-// import { Model } from './Model';
 import { OrbitControls } from '@react-three/drei';
 import { useGLTF } from '@react-three/drei';
 
@@ -34,12 +33,12 @@ function ThreeDExample() {
         <Model
         // rotation={[0, rotation, 0]}
         scale={[1, 1, 1]} position={[0, 0, 0]} />
-        <OrbitControls 
-        //   enablePan={false}
+        {/* <OrbitControls 
+          enablePan={false}
           enableZoom={false}
-        //   minPolarAngle={Math.PI / 2}
-        //   maxPolarAngle={Math.PI / 2}
-        />
+          minPolarAngle={Math.PI / 2}
+          maxPolarAngle={Math.PI / 2}
+        /> */}
       </Canvas>
       <div>
         {/* <input

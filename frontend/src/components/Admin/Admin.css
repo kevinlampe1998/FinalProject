@@ -1,0 +1,20 @@
+.admin nav {
+    
+}
+
+.admin nav a,
+.admin nav a:link,
+.admin nav a:active,
+.admin nav a:visited {
+  margin: 10px 2px;
+  color: white;
+  text-decoration: none;
+  background: #000;
+  padding: 10px 20px;
+  border: 2px solid #0cf;
+  border-radius: 10px;
+}
+
+.admin nav a:hover {
+  background: #0af;
+}
