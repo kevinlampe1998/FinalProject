@@ -45,6 +45,8 @@ const SetProduct = () => {
         }
 
         if (data.savedProduct) {
+            console.log(data.savedProduct);
+            console.log(formData);
 
             const picRes = await fetch(`http://localhost:3000/images/${data.savedProduct._id}`, {
                 method: 'POST',
