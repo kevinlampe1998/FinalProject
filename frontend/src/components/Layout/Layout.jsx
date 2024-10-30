@@ -35,9 +35,9 @@ const Layout = () => {
         (helpPopUp.current.style.display = 'none');
     }, []);
 
-    useEffect(() => {
-        console.log(localDataBank.admin);
-    });
+    // useEffect(() => {
+    //     console.log(localDataBank.admin);
+    // });
 
     return (
         <div className="layout">

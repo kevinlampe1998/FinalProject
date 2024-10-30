@@ -34,6 +34,7 @@ const upload = multer({ storage });
 router.post('/:_id', upload.single('file'), async (req, res) => {
     try {
         const { _id } = req.params;
+
     
         const newImage = new Image({
             url: req.file.path,

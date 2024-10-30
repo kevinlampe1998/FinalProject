@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import MailSystem from "../MailSystem/MailSystem";
 import './UsedItem.css';
+import { TheContext } from "../../App";
 
 const Product = () => {
     const { _id } = useParams();
     const [product, setProduct] = useState();
+    const { localDataBank, dispatch } = useContext(TheContext);
+    const navi = useNavigate();
 
     const fetchProduct = async () => {
         const res = await fetch(`http://localhost:3000/used-item/${_id}`);
@@ -12,6 +16,11 @@ const Product = () => {
         console.log(data);
 
         setProduct(data.product);
+    };
+
+    const naviMailSystem = (id) => {
+        navi(`/mail-system/${id}`);
+        return;
     };
 
     useEffect(() => {
@@ -34,6 +43,7 @@ const Product = () => {
 
             <button>Add to wishlist</button>
             <button>Buy</button>
+            <button onClick={() => naviMailSystem(product._id)}>Contact Seller</button>
 
             <div className="product-comments">
                 <h5>Comments and Ratings</h5>
