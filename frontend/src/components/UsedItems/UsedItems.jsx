@@ -2,6 +2,7 @@ import './UsedItems.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import { TheContext } from '../../App';
+import MailSystem from '../MailSystem/MailSystem.jsx';
 
 const Products = () => {
     const navigate = useNavigate();

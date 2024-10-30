@@ -11,6 +11,7 @@ import Rating from './components/Rating/Rating.jsx';
 import UsedItems from './components/UsedItems/UsedItems.jsx';
 import UsedItem from './components/UsedItem/UsedItem.jsx';
 import UserProfile from './components/UserProfile/UserProfile.jsx';
+import MailSystem from './components/MailSystem/MailSystem.jsx';
 
 const initialState = {
   user: undefined,
@@ -75,6 +76,7 @@ const App = () => {
             <Route path='/used-item/:_id' element={<UsedItem />} />
             <Route path='/help-chat' element={<HelpChat />} />
             <Route path='/rating' element={<Rating />} />
+            <Route path='/mail-system/:product_id' element={<MailSystem />} />
 
           </Route>
 
