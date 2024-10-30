@@ -1,5 +1,5 @@
 .layout {
-  background: #0bf;
+  background: #0af;
 }
 
 .layout header {
@@ -70,7 +70,7 @@
   footer {
     display: flex;
     flex-direction: column;
-    background: #0af;
+    background: #0bf;
     height: 500px;
     margin-top: 300px;
   }
