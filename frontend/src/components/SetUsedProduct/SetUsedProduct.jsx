@@ -38,6 +38,8 @@ const SetProduct = () => {
         const data = await res.json();
         console.log('data', data);
 
+        data.error && alert(data.message);
+
         message.current.style.color = 'green';        
         message.current.innerHTML = data.message;
 
@@ -56,6 +58,11 @@ const SetProduct = () => {
             });
         
             const picData = await picRes.json();
+
+            if (picData.error) {
+                alert(data.message);
+                return;
+            }
 
             picMessage.current.style.color = 'green';
             picMessage.current.innerHTML = picData.message;

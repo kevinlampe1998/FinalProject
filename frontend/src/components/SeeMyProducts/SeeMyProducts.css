@@ -1,12 +1,11 @@
-.products {
-    height: 5000px;
+.see-my-products {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
 
-.product-container {
+.see-my-product-container {
     border: 3px solid #09f;
     width: 90%;
     height: 500px;
@@ -19,22 +18,22 @@
     background: #09f;
 }
 
-.product-container img {
+.see-my-product-container img {
     width: 200px;
     height: 200px;
     object-fit: cover;
     border-radius: 10px;
 }
 
-.product-container > div > * {
+.see-my-product-container > div > * {
     padding-bottom: 10px;
 }
 
-.product-container h4 {
+.see-my-product-container h4 {
     font-size: 1.2rem;
 }
 
-.products button {
+.see-my-products button {
     margin: 10px;
     background: #07f;
     padding: 5px 20px;
