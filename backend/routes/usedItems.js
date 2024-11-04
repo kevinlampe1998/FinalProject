@@ -86,6 +86,21 @@ router.get('/get-my-products/:_id', async (req, res) => {
     }
 });
 
+router.patch('/:_id', async (req, res) => {
+    try {
+        console.log(req.body);
+        console.log(req.params._id);
+
+        res.json({ message: 'Your product is successful updated!' });
+        return;
+        
+    } catch (err) {
+        console.log('Error on PATCH /used-items/:_id');
+        res.json({ message: 'Something went wrong!' });
+        return;
+    }
+});
+
 router.delete('/:_id', async (req, res) => {
     try {
         const { _id } = req.params;
