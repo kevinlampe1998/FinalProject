@@ -98,15 +98,15 @@ const SetProduct = () => {
             setMessage("Produkt erfolgreich gespeichert");
             setPicMessage("Bild erfolgreich hochgeladen");
 
-            // Form zurücksetzen
-            event.target.reset();
-            setFile(null);
-        } catch (error) {
-            console.error("Error:", error);
-            setMessage("Ein Fehler ist aufgetreten");
-        } finally {
-            setIsLoading(false);
-        }
+        //     // Form zurücksetzen
+        //     event.target.reset();
+        //     setFile(null);
+        // } catch (error) {
+        //     console.error("Error:", error);
+        //     setMessage("Ein Fehler ist aufgetreten");
+        // } finally {
+        //     setIsLoading(false);
+        // }
     };
 
     return (
