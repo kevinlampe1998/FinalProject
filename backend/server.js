@@ -10,7 +10,8 @@ import usedItemRoute from './routes/usedItem.js';
 import imagesRoute from './routes/images.js';
 import helpChatRoute from './routes/helpChat.js';
 import newInStoreRoute from './routes/newInStore.js';
-import shoppingCartRoute from './routes/usedShoppingCart.js';
+import usedShoppingCartRoute from './routes/usedShoppingCart.js';
+import adminRoute from './routes/admin.js';
 
 
 dotenv.config();
@@ -35,7 +36,7 @@ app.use('/used-item', usedItemRoute);
 app.use('/images', imagesRoute);
 app.use('/help-chat', helpChatRoute);
 app.use('/new-in-store', newInStoreRoute);
-app.use('/used-shopping-cart', shoppingCartRoute);
+app.use('/used-shopping-cart', usedShoppingCartRoute);
 
 
 

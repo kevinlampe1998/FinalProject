@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-// import { Model } from './Model';
 import { OrbitControls } from '@react-three/drei';
 import { useGLTF } from '@react-three/drei';
 
@@ -9,7 +8,7 @@ const CameraLookAt = ({ target }) => {
         camera.lookAt(...target);
     });
     return null;
-}
+};
 
 const Model = (props) => {
     const modelRef = useRef();
@@ -18,12 +17,12 @@ const Model = (props) => {
         modelRef.current && (modelRef.current.rotation.y += 0.01);
     });
 
-    const { scene } = useGLTF('/models/scene.gltf');
+    const { scene } = useGLTF("/models/scene.gltf");
     return <primitive ref={modelRef} object={scene} {...props} />;
-  }
+};
 
 function ThreeDExample() {
-  const [rotation, setRotation] = useState(-90);
+    const [rotation, setRotation] = useState(-90);
 
   return (
     <div style={{ width: '100vw', height: '80vh' }}>
@@ -34,12 +33,12 @@ function ThreeDExample() {
         <Model
         // rotation={[0, rotation, 0]}
         scale={[1, 1, 1]} position={[0, 0, 0]} />
-        <OrbitControls 
-        //   enablePan={false}
+        {/* <OrbitControls 
+          enablePan={false}
           enableZoom={false}
-        //   minPolarAngle={Math.PI / 2}
-        //   maxPolarAngle={Math.PI / 2}
-        />
+          minPolarAngle={Math.PI / 2}
+          maxPolarAngle={Math.PI / 2}
+        /> */}
       </Canvas>
       <div>
         {/* <input
@@ -51,9 +50,9 @@ function ThreeDExample() {
           onChange={(e) => setRotation(parseFloat(e.target.value))}
         />
         <div>{rotation}</div> */}
-      </div>
-    </div>
-  );
+            </div>
+        </div>
+    );
 }
 
 export default ThreeDExample;

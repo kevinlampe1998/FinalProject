@@ -2,6 +2,7 @@ import './UsedItems.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import { TheContext } from '../../App';
+import MailSystem from '../MailSystem/MailSystem.jsx';
 
 const Products = () => {
     const navigate = useNavigate();
@@ -50,7 +51,6 @@ const Products = () => {
                                 product.seller_name : 'Anonym'}</div>
                             <div>Description: {product.description}</div>
                             <div>Price: {product.price}</div>
-                            <div>Quantity: {product.quantity}</div>
                             <div>
                                 <button onClick={() => navigate(`/used-item/${product._id}`)}>Show me the product</button>
                                 <button>Add to wishlist</button>

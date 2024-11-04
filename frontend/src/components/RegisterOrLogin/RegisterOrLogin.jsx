@@ -69,6 +69,13 @@ const RegisterOrLogin = () => {
 
         const data = await res.json();
 
+        if (data.admin) {
+            alert('Admin logged in!');
+
+            dispatch({ type: 'admin-login', payload: data.admin });
+            return;
+        }
+
         dispatch({ type: 'users-login', payload: data.searchedUser });
 
     };

@@ -33,8 +33,12 @@ const SetProduct = () => {
             }),
             headers: { 'content-type': 'application/json' }
         });
+        console.log('res', res)
 
         const data = await res.json();
+        console.log('data', data);
+
+        data.error && alert(data.message);
 
         message.current.style.color = 'green';        
         message.current.innerHTML = data.message;
@@ -45,6 +49,8 @@ const SetProduct = () => {
         }
 
         if (data.savedProduct) {
+            console.log(data.savedProduct);
+            console.log(formData);
 
             const picRes = await fetch(`http://localhost:3000/images/${data.savedProduct._id}`, {
                 method: 'POST',
@@ -53,16 +59,18 @@ const SetProduct = () => {
         
             const picData = await picRes.json();
 
+            if (picData.error) {
+                alert(data.message);
+                return;
+            }
+
             picMessage.current.style.color = 'green';
             picMessage.current.innerHTML = picData.message;
 
-            if (picData.image) {
-                setTimeout(location.reload(), 2000);
-            }
+            // if (picData.image) {
+            //     setTimeout(location.reload(), 2000);
+            // }
         }
-
-        
-
     };
     
     return (
@@ -81,7 +89,7 @@ const SetProduct = () => {
             <label htmlFor="">Price</label>
             <input type="text"/>
 
-            <button>Submit</button>
+            <button type='submit'>Submit</button>
             <h3 ref={message}></h3>
             <h3 ref={picMessage}></h3>
         </form>
