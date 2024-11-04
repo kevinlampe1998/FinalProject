@@ -13,6 +13,7 @@ import UsedItem from './components/UsedItem/UsedItem.jsx';
 import UserProfile from './components/UserProfile/UserProfile.jsx';
 import MailSystem from './components/MailSystem/MailSystem.jsx';
 import SeeMyProducts from './components/SeeMyProducts/SeeMyProducts.jsx';
+import FAQ from './components/FAQ/FAQ.jsx';
 
 const initialState = {
   user: undefined,
@@ -79,6 +80,7 @@ const App = () => {
             <Route path='/rating' element={<Rating />} />
             <Route path='/mail-system/:product_id' element={<MailSystem />} />
             <Route path='/see-my-products' element={<SeeMyProducts />} />
+            <Route path='/faq' element={<FAQ />} />
 
           </Route>
 
