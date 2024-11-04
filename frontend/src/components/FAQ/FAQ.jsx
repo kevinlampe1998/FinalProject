@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './FAQ.css';
 
 // Beispiel-Daten für die FAQs
 const faqs = [

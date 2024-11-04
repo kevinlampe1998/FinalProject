@@ -1,13 +1,15 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import MailSystem from "../MailSystem/MailSystem";
-import './UsedItem.css';
+// import MailSystem from "../MailSystem/MailSystem.jsx";
+
+import "./UsedItem.css";
 import { TheContext } from "../../App";
 
 const Product = () => {
     const { _id } = useParams();
     const [product, setProduct] = useState();
-    const { localDataBank, dispatch } = useContext(TheContext);
+    // const { localDataBank, dispatch } = useContext(TheContext);
     const navi = useNavigate();
 
     const fetchProduct = async () => {
@@ -29,9 +31,7 @@ const Product = () => {
 
     return (
         <section className="single-product">
-            {
-                product &&
-
+            {product && (
                 <div>
                     <h3>Seller: {product.seller_name}</h3>
                     <h4>Product name: {product.product_name}</h4>
@@ -39,25 +39,24 @@ const Product = () => {
                     <div>Description: {product.description}</div>
                     <div>Price: {product.price}</div>
                 </div>
-            }
+            )}
 
             <button>Add to wishlist</button>
             <button>Buy</button>
-            <button onClick={() => naviMailSystem(product._id)}>Contact Seller</button>
+            <button onClick={() => naviMailSystem(product._id)}>
+                Contact Seller
+            </button>
 
             <div className="product-comments">
                 <h5>Comments and Ratings</h5>
 
-                {
-                    [1, 2, 3].map((index) => (
-                        <div key={index} className="single-product-comment">
-                            <span>Username who comments</span>
-                            <span>I like this product</span>
-                        </div>
-                    ))
-                }
+                {[1, 2, 3].map((index) => (
+                    <div key={index} className="single-product-comment">
+                        <span>Username who comments</span>
+                        <span>I like this product</span>
+                    </div>
+                ))}
             </div>
-
         </section>
     );
 };

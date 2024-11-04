@@ -76,7 +76,7 @@ const Layout = () => {
                             <Link to="/rating" onClick={scrollToTop}>Rating</Link>
                             <Link to="/help-chat" onClick={scrollToTop}>Help-Chat</Link>
                             <Link to="/team" onClick={scrollToTop}>Team</Link>
-                            <Link>FAQ</Link>
+                            <Link to="/faq" onClick={scrollToTop}>FAQ</Link>
                         </footer>
                 }
 
