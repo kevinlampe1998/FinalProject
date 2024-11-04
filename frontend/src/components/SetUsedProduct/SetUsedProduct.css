@@ -1,34 +1,71 @@
+.set-product-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 .set-product {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    height: 1000px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .set-product h2 {
-    margin-top: 20px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-.set-product > * {
-    width: 80%;
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.submit-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #dc3545;
+    margin-top: 10px;
     text-align: center;
 }
 
-.set-product input {
-    padding: 5px 20px;
-    border-radius: 10px;
-}
-
-.set-product textarea {
-    padding: 5px 20px;
-    border-radius: 10px;
-}
-
-.set-product button {
-    background: #0af;
-    color: #fff;
-    padding: 5px 20px;
-    width: 80px;
-    border: none;
+.success-message {
+    color: #28a745;
+    margin-top: 10px;
+    text-align: center;
 }

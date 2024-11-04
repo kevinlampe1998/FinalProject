@@ -1,0 +1,36 @@
+{
+    "root": true,
+    "parser": "@babel/eslint-parser",
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module",
+        "requireConfigFile": false
+    },
+    "plugins": ["react", "react-hooks"],
+    "rules": {
+        "react/react-in-jsx-scope": 0,
+        "react/prop-types": 0,
+        "no-unused-vars": 0,
+        "react-hooks/exhaustive-deps": 0,
+        "no-undef": 1,
+        "no-console": 0
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    }
+}
