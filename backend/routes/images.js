@@ -87,4 +87,42 @@ router.post("/:_id", upload.single("file"), async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 export default router;
+=======
+const upload = multer({ storage });
+
+router.post('/:_id', upload.single('file'), async (req, res) => {
+    try {
+        const { _id } = req.params;
+        console.log('_id', _id);
+        if (!_id) return res.json({ message: '_id is missing!', error: true });
+    
+        const newImage = new Image({
+            url: req.file.path,
+            public_id: req.file.filename
+        });
+        console.log('newImage', newImage);
+        if (!newImage) return res.json({ message: 'Error creating new image!', error: true });
+        
+        const savedImage = await newImage.save();
+        console.log('savedImage', savedImage);
+        if (!savedImage) return res.json({ message: 'Error saving new image!', error: true });
+        
+        const product = await UsedItem.updateOne({ _id },
+            { main_picture: savedImage });
+        console.log('product', product);
+        if (!product) return res.json({ message: 'Error updating usedItem!', error: true });
+    
+        res.json({ message: 'Image successful saved!',
+            image: savedImage });
+
+    } catch (err) {
+        console.log('Error on POST /images/:_id');
+        res.json({ message: 'Image: Something went wrong!' });
+        return;
+    } 
+});
+
+export default router;
+>>>>>>> b73896d2f81b09fa8d984e03a4dedbc29b7ec5d5

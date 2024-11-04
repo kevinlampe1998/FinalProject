@@ -66,6 +66,7 @@ const SetProduct = () => {
                 }
             );
 
+<<<<<<< HEAD
             const picData = await picRes.json();
 
             if (!picData.success) {
@@ -75,6 +76,36 @@ const SetProduct = () => {
                 setIsLoading(false);
                 return;
             }
+=======
+        data.error && alert(data.message);
+
+        message.current.style.color = 'green';        
+        message.current.innerHTML = data.message;
+
+        if (!data.savedProduct) {
+            message.current.style.color = 'red';
+            return;
+        }
+
+        if (data.savedProduct) {
+            console.log(data.savedProduct);
+            console.log(formData);
+
+            const picRes = await fetch(`http://localhost:3000/images/${data.savedProduct._id}`, {
+                method: 'POST',
+                body: formData
+            });
+        
+            const picData = await picRes.json();
+
+            if (picData.error) {
+                alert(data.message);
+                return;
+            }
+
+            picMessage.current.style.color = 'green';
+            picMessage.current.innerHTML = picData.message;
+>>>>>>> b73896d2f81b09fa8d984e03a4dedbc29b7ec5d5
 
             setMessage("Produkt erfolgreich gespeichert");
             setPicMessage("Bild erfolgreich hochgeladen");
