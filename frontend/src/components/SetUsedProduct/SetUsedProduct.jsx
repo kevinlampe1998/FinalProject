@@ -1,70 +1,42 @@
-import "./SetUsedProduct.css";
-import { useState, useContext } from "react";
-import { TheContext } from "../../App.jsx";
+import './SetUsedProduct.css';
+import { useState, useRef, useContext, useEffect } from 'react';
+import { TheContext } from '../../App.jsx';
 
 const SetProduct = () => {
-    const [file, setFile] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [message, setMessage] = useState("");
-    const [picMessage, setPicMessage] = useState("");
-    const { localDataBank } = useContext(TheContext);
+    const [file, setFile] = useState();
+    const setProductForm = useRef();
+    const message = useRef();
+    const picMessage = useRef();
+
+    const { localDataBank, dispatch } = useContext(TheContext);
 
     const postProduct = async (event) => {
         event.preventDefault();
-        setIsLoading(true);
-        setPicMessage("");
-        setMessage("");
 
-        try {
-            if (!file) {
-                setPicMessage("Bitte wählen Sie ein Bild aus");
-                setIsLoading(false);
-                return;
-            }
+        const formData = new FormData();
+        formData.append('file', file);
 
-            // Get form values directly from the event
-            const formData = new FormData(event.target);
-            const product_name = formData.get("product_name");
-            const description = formData.get("description");
-            const price = formData.get("price");
+        
+        const product_name = setProductForm.current.children[2].value;
+        
+        const description = setProductForm.current.children[6].value;
 
-            // Erste API-Anfrage zum Speichern der Produktdaten
-            const res = await fetch(
-                `http://localhost:3000/used-items/set-used-item/${localDataBank.user._id}`,
-                {
-                    method: "POST",
-                    body: JSON.stringify({
-                        product_name,
-                        description,
-                        price,
-                    }),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+        const price = setProductForm.current.children[8].value;
 
-            const data = await res.json();
+        console.log(product_name, description, price);
 
-            if (!data.savedProduct) {
-                setMessage(
-                    data.message || "Fehler beim Speichern des Produkts"
-                );
-                setIsLoading(false);
-                return;
-            }
 
-            // Wenn Produkt erfolgreich gespeichert wurde, lade das Bild hoch
-            const imageFormData = new FormData();
-            imageFormData.append("file", file);
+        const res = await fetch(`http://localhost:3000/used-items/set-used-item/${localDataBank.user._id}`, {
+            method: 'POST',
+            body: JSON.stringify({
+                product_name, description, price
+            }),
+            headers: { 'content-type': 'application/json' }
+        });
+        console.log('res', res)
 
-            const picRes = await fetch(
-                `http://localhost:3000/images/${data.savedProduct._id}`,
-                {
-                    method: "POST",
-                    body: imageFormData,
-                }
-            );
+        const data = await res.json();
+        console.log('data', data);
 
         data.error && alert(data.message);
 
@@ -95,94 +67,32 @@ const SetProduct = () => {
             picMessage.current.style.color = 'green';
             picMessage.current.innerHTML = picData.message;
 
-            setMessage("Produkt erfolgreich gespeichert");
-            setPicMessage("Bild erfolgreich hochgeladen");
-
-        //     // Form zurücksetzen
-        //     event.target.reset();
-        //     setFile(null);
-        // } catch (error) {
-        //     console.error("Error:", error);
-        //     setMessage("Ein Fehler ist aufgetreten");
-        // } finally {
-        //     setIsLoading(false);
-        // }
+            // if (picData.image) {
+            //     setTimeout(location.reload(), 2000);
+            // }
+        }
     };
-
+    
     return (
-        <div className="set-product-container">
-            <form className="set-product" onSubmit={postProduct}>
-                <h2>Set product to sell</h2>
+        <form className="set-product" onSubmit={postProduct} ref={setProductForm}>
+            <h2>Set product to sell</h2>
 
-                <div className="form-group">
-                    <label htmlFor="product_name">Product name</label>
-                    <input
-                        type="text"
-                        id="product_name"
-                        name="product_name"
-                        required
-                    />
-                </div>
+            <label htmlFor="">Product name</label>
+            <input type="text" />
 
-                <div className="form-group">
-                    <label htmlFor="product_image">Main Picture</label>
-                    <input
-                        type="file"
-                        id="product_image"
-                        name="file"
-                        accept="image/jpeg,image/png"
-                        onChange={(e) => setFile(e.target.files[0])}
-                        required
-                    />
-                </div>
+            <label htmlFor="">Main Picture</label>
+            <input type="file" onChange={(e) => setFile(e.target.files[0])}/>
 
-                <div className="form-group">
-                    <label htmlFor="description">Description</label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        required
-                    ></textarea>
-                </div>
+            <label htmlFor="">Description</label>
+            <textarea name="" id=""></textarea>
 
-                <div className="form-group">
-                    <label htmlFor="price">Price</label>
-                    <input type="number" id="price" name="price" required />
-                </div>
+            <label htmlFor="">Price</label>
+            <input type="text"/>
 
-                <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="submit-button"
-                >
-                    {isLoading ? "Uploading..." : "Submit"}
-                </button>
-
-                {message && (
-                    <p
-                        className={
-                            message.includes("Fehler")
-                                ? "error-message"
-                                : "success-message"
-                        }
-                    >
-                        {message}
-                    </p>
-                )}
-
-                {picMessage && (
-                    <p
-                        className={
-                            picMessage.includes("Fehler")
-                                ? "error-message"
-                                : "success-message"
-                        }
-                    >
-                        {picMessage}
-                    </p>
-                )}
-            </form>
-        </div>
+            <button type='submit'>Submit</button>
+            <h3 ref={message}></h3>
+            <h3 ref={picMessage}></h3>
+        </form>
     );
 };
 
