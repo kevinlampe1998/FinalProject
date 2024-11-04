@@ -66,17 +66,6 @@ const SetProduct = () => {
                 }
             );
 
-<<<<<<< HEAD
-            const picData = await picRes.json();
-
-            if (!picData.success) {
-                setPicMessage(
-                    picData.message || "Fehler beim Hochladen des Bildes"
-                );
-                setIsLoading(false);
-                return;
-            }
-=======
         data.error && alert(data.message);
 
         message.current.style.color = 'green';        
@@ -105,7 +94,6 @@ const SetProduct = () => {
 
             picMessage.current.style.color = 'green';
             picMessage.current.innerHTML = picData.message;
->>>>>>> b73896d2f81b09fa8d984e03a4dedbc29b7ec5d5
 
             setMessage("Produkt erfolgreich gespeichert");
             setPicMessage("Bild erfolgreich hochgeladen");
