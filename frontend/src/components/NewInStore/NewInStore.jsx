@@ -1,34 +1,17 @@
 import { useEffect, useState } from "react";
-import './NewInStore.css';
+import "./NewInStore.css";
 import ThreeDExample from "../ThreeDExample/ThreeDExample";
 
 const Home = () => {
-  // const [randomProducts, setRandomProducts] = useState();
+    const [customerName, setCustomerName] = useState("Guest");
 
-  // const fetchRandomProducts = async () => {
-  //   const res = await fetch('http://localhost:3000/home/get-random-product-images');
-  //   const data = await res.json();
-
-  //   setRandomProducts(data.randomProducts);
-  // };
-
-  // useEffect(() => {
-  //   fetchRandomProducts();
-  // }, []);
-
-  return (
-    <section className="home">
-        <h1>Welcome to Tech Oase</h1>
-        <ThreeDExample/>
-        {/* <div className="home-pics">
-        {
-          randomProducts && randomProducts.map(product => (
-            <img key={product._id} src={product.main_picture?.url} />
-          ))
-        }
-        </div> */}
-    </section>
-  );
+    return (
+        <section className="home">
+            <p className="rotating-welcome">Welcome {customerName}</p>
+            <h1>Welcome to Tech Oase</h1>
+            <ThreeDExample />
+        </section>
+    );
 };
 
 export default Home;
