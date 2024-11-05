@@ -1,18 +1,18 @@
 .team-project {
     max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+    margin: auto;
+    padding: 30px;
 }
 
 ul {
     list-style-type: none;
-    padding: 0;
+    padding: 30px;
 }
 
 .team-member {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .team-member-image {
@@ -21,6 +21,30 @@ ul {
     border-radius: 50%;
     margin-right: 20px;
     object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+@keyframes wobble {
+    0% {
+        transform: scale(1.25) rotate(0deg);
+    }
+    25% {
+        transform: scale(1.25) rotate(-5deg);
+    }
+    50% {
+        transform: scale(1.25) rotate(0deg);
+    }
+    75% {
+        transform: scale(1.25) rotate(5deg);
+    }
+    100% {
+        transform: scale(1.25) rotate(0deg);
+    }
+}
+
+.team-member-image:hover {
+    animation: wobble 1s ease infinite;
+    cursor: pointer;
 }
 
 .team-member div {

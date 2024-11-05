@@ -1,15 +1,16 @@
 import React from "react";
+import "./TeamProject.css";
 
 const TeamProject = () => {
     const teamMembers = [
         {
-            name: "Philipp",
+            name: "Philipp Sauerlaender",
             role: "Frontend Developer",
             image: "/images/philipp.jpeg", // Lokaler Pfad im public-Ordner
         },
         {
-            name: "Kevin",
-            role: "Backend Developer",
+            name: "Kevin Lampe",
+            role: "Backend Developer, Frontend Developer",
             image: "/images/kevin.jpg", // Lokaler Pfad im public-Ordner
         },
         {
