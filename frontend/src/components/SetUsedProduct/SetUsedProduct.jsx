@@ -7,6 +7,7 @@ const SetProduct = () => {
     const setProductForm = useRef();
     const message = useRef();
     const picMessage = useRef();
+    const [ priceValue, setPriceValue ] = useState('0,00');    
 
     const { localDataBank, dispatch } = useContext(TheContext);
 
@@ -72,22 +73,63 @@ const SetProduct = () => {
             // }
         }
     };
+
+    const correctPrice = (event) => {
+        const value = event.target.value;
+
+        if (value.length < 4) {
+            const removedComma = value.replace(',', '');
+            const unshiftZeroComma = removedComma.split('');
+            unshiftZeroComma.unshift('0,');
+            setPriceValue(unshiftZeroComma.join(''));
+            return;
+        }
+
+        
+        const numbers = '0123456789'.split('');
+        
+        const lastChar = value.slice(-1);
+        
+        if (!numbers.includes(lastChar)) {
+            setPriceValue(value.slice(0, -1));
+            return;
+        }
+        
+        const removedComma = value.replace(',', '');
+        
+        const numberArray = removedComma.split('');
+        numberArray.splice(numberArray.length - 2, 0, ',');
+        
+        const under2Digits = numberArray.length < 4 && numberArray.join('').replace(',', '');
+        
+        const prePrice = under2Digits ? under2Digits : numberArray.join('');
+        
+        if (prePrice.length > 4 && prePrice[0] === '0') {
+            const removedZero = prePrice.split('');
+            removedZero.shift();
+            console.log(removedZero);
+            setPriceValue(removedZero.join(''));
+            return;
+        }
+
+        setPriceValue(prePrice);
+    };
     
     return (
         <form className="set-product" onSubmit={postProduct} ref={setProductForm}>
             <h2>Set product to sell</h2>
 
-            <label htmlFor="">Product name</label>
-            <input type="text" />
+            <label>Product name</label>
+            <input type="text"/>
 
-            <label htmlFor="">Main Picture</label>
+            <label>Main Picture</label>
             <input type="file" onChange={(e) => setFile(e.target.files[0])}/>
 
-            <label htmlFor="">Description</label>
-            <textarea name="" id=""></textarea>
+            <label>Description</label>
+            <textarea></textarea>
 
-            <label htmlFor="">Price</label>
-            <input type="text"/>
+            <label>Price</label>
+            <input type="text" onChange={correctPrice} value={priceValue}/>
 
             <button type='submit'>Submit</button>
             <h3 ref={message}></h3>

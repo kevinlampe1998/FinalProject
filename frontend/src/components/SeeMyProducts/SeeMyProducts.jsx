@@ -4,6 +4,9 @@ import './SeeMyProducts.css';
 
 const MyProduct = ({props: props}) => {
     const productContainer = useRef();
+    const [ update, setUpdate ] = useState(false);
+    const [ priceValue, setPriceValue ] = useState('0,00');
+    const priceRef = useRef();
 
     const deleteProduct = async (_id) => {
         const res = await fetch(`http://localhost:3000/used-items/${_id}`, { method: 'DELETE' });
@@ -14,9 +17,46 @@ const MyProduct = ({props: props}) => {
         location.reload();
     };
 
-    const updateProduct = async (event) => {
-        event.preventDefault();
+    
+    const correctPrice = (event) => {
+        const value = event.target.value;
 
+        if (value.length < 4) {
+            const removedComma = value.replace(',', '');
+            const unshiftZeroComma = removedComma.split('');
+            unshiftZeroComma.unshift('0,');
+            setPriceValue(unshiftZeroComma.join(''));
+            return;
+        }
+
+        
+        const numbers = '0123456789'.split('');
+        
+        const lastChar = value.slice(-1);
+        
+        if (!numbers.includes(lastChar)) {
+            setPriceValue(value.slice(0, -1));
+            return;
+        }
+        
+        const removedComma = value.replace(',', '');
+        
+        const numberArray = removedComma.split('');
+        numberArray.splice(numberArray.length - 2, 0, ',');
+        
+        const under2Digits = numberArray.length < 4 && numberArray.join('').replace(',', '');
+        
+        const prePrice = under2Digits ? under2Digits : numberArray.join('');
+        
+        if (prePrice.length > 4 && prePrice[0] === '0') {
+            const removedZero = prePrice.split('');
+            removedZero.shift();
+            console.log(removedZero);
+            setPriceValue(removedZero.join(''));
+            return;
+        }
+
+        setPriceValue(prePrice);
     };
 
     const changeToForm = () => {
@@ -31,26 +71,35 @@ const MyProduct = ({props: props}) => {
         const oldName = productContainer.current.children[4];
         const newNameInput = document.createElement('input');
         newPictureInput.innerHTML = 'Hello';
-        // newNameInput.setAttribute('placeholder', oldName.innerHTML);
+        newNameInput.setAttribute('value', oldName.innerHTML);
         oldName.replaceWith(newNameInput);
 
         const oldDescription = productContainer.current.children[6];
         const newDescriptionInput = document.createElement('input');
-        newDescriptionInput.setAttribute('placeholder', oldDescription.innerHTML);
+        newDescriptionInput.setAttribute('value', oldDescription.innerHTML);
         oldDescription.replaceWith(newDescriptionInput);
 
-        const oldPrice = productContainer.current.children[8];
-        const newPriceInput = document.createElement('input');
-        newPriceInput.setAttribute('placeholder', oldPrice.innerHTML);
-        oldPrice.replaceWith(newPriceInput);
+        const oldPrice = productContainer.current.children[8].innerHTML;
+        setUpdate(true);
 
-        const deleteButton = productContainer.current.children[9].
-            children[1];
+        const deleteButton = productContainer.current.children[9].children[1];
         deleteButton.style.display = 'none';
-
-        const changeButton = productContainer.current.children[9].
-        children[0];
+        
+        const changeButton = productContainer.current.children[9].children[0];
         changeButton.innerHTML = 'Update';
+    };
+
+    const updateProduct = async (event) => {
+        event.preventDefault();
+
+        const res = await fetch(`http://localhost:3000/used-items/${props._id}`, {
+            method: 'PATCH',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify()
+        });
+        const data = await res.json();
+
+        console.log(data.message);
     };
 
     return (
@@ -63,9 +112,19 @@ const MyProduct = ({props: props}) => {
             <h5>Description:</h5>
             <div>{props.description}</div>
             <h5>Price:</h5>
-            <div>{props.price}</div>
+            {
+                update ?
+                    <input ref={priceRef} onChange={correctPrice} value={priceValue}/>
+                :
+                    <div>{props.price}</div>
+            }
             <div>
-                <button onClick={changeToForm}>Change</button>
+                {   
+                    update ?
+                    <button onClick={updateProduct}>Update</button>
+                    : <button onClick={changeToForm}>Change</button>
+
+                }
                 <button onClick={() => deleteProduct(props._id)}>Delete</button>
             </div>
         </div>

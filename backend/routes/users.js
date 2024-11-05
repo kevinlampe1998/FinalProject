@@ -108,7 +108,7 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign(
             { userId: searchedUser._id },
             process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "12h" }
         );
 
         searchedUser.hash = undefined;
@@ -116,7 +116,7 @@ router.post("/login", async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
-            maxAge: 3_600_000,
+            maxAge: 43_200_000,
             sameSite: "Strict",
         });
         res.json({

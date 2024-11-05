@@ -8,7 +8,6 @@ router.get('/', async (req, res) => {
         const aggregateProducts = await UsedItem.aggregate([{ $sample: { size: 10 } }]);
         const products = await UsedItem.populate(aggregateProducts, { path: 'main_picture' });
         
-
         res.json({ message: 'Here are the products!', products });
         return;
 
@@ -22,31 +21,43 @@ router.get('/', async (req, res) => {
 router.post('/set-used-item/:user_who_sells', async (req, res) => {
     try {
         const { product_name, description, price } = req.body;
-        if (!product_name || !description || !price) return
+        if (!product_name || !description || !price) {
             res.json({ message: 'product_name, description or/and price is missing!', error: true });
+            return;
+        }
         
         const { user_who_sells } = req.params;
-        if (!user_who_sells) return res.json({ message: 'user_who_sells is missing!', error: true });
+        if (!user_who_sells) {
+            res.json({ message: 'user_who_sells is missing!', error: true });
+        }
 
         const existAlready = await UsedItem.findOne({ product_name });
-
         if (existAlready) {
             res.json({ message: 'Used item name exists already!', error: true });
             return;
         };
 
         const user = await User.findOne({ _id: user_who_sells });
-        if (!user) return res.json({ message: 'No user found!', error: true });
+        if (!user) {
+            res.json({ message: 'No user found!', error: true });
+            return;
+        }
 
         const seller_name = `${user.firstName} ${user.lastName}`;
+        const createdAt = Date.now();
 
         const newProduct = new UsedItem({
-            seller_name, product_name, description, price, user_who_sells
+            seller_name, product_name, description, price, user_who_sells, createdAt
         });
-        if (!newProduct) return res.json({ message: 'Error creating newProduct', error: true });
+        if (!newProduct) {
+            res.json({ message: 'Error creating newProduct', error: true });
+        }
 
         const savedProduct = await newProduct.save();
-        if (!savedProduct) return res.json({ message: 'Error saving new product!', error: true });
+        if (!savedProduct) {
+            res.json({ message: 'Error saving new product!', error: true });
+            return;
+        }
 
         res.json({ message: 'Product successful saved!', savedProduct });
         return;
@@ -61,7 +72,6 @@ router.post('/set-used-item/:user_who_sells', async (req, res) => {
 router.get('/get-my-products/:_id', async (req, res) => {
     try {
         const { _id } = req.params;
-        // console.log(_id);
         if (!_id) {
             console.log('_id not found!');
             res.json({ message: '_id not found!', error: true });
@@ -69,12 +79,12 @@ router.get('/get-my-products/:_id', async (req, res) => {
         }
 
         const usedItems = await UsedItem.find({ user_who_sells: _id }).populate('main_picture');
-        // console.log(usedItems);
         if (!usedItems) {
             console.log('usedItems not found!');
             res.json({ message: 'usedItems not found!', error: true });
             return;
         }
+        usedItems.reverse();
 
         res.json({ message: 'Here are your products!', usedItems });
         return;

@@ -58,8 +58,6 @@ const RegisterOrLogin = () => {
         const email = e.target.children[2].value;
         const password = e.target.children[4].value;
 
-        console.log(email, password);
-
         const res = await fetch('http://localhost:3000/users/login', {
             method: 'POST',
             body: JSON.stringify({ email, password }),

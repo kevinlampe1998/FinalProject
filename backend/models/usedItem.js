@@ -8,7 +8,8 @@ const usedItemSchema = new mongoose.Schema({
     other_pictures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
     description: String,
     price: String,
-    rating: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }]
+    rating: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }],
+    createdAt: { type: Date, default: Date.now }
 });
 
 export default mongoose.model('UsedItem', usedItemSchema);
