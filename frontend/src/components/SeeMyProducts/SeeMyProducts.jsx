@@ -5,14 +5,13 @@ import './SeeMyProducts.css';
 const MyProduct = ({props: props}) => {
     const productContainer = useRef();
     const [ update, setUpdate ] = useState(false);
-    const [ priceValue, setPriceValue ] = useState('0,00');
+    const [ priceValue, setPriceValue ] = useState(props.price);
     const priceRef = useRef();
+    const [file, setFile] = useState();
 
     const deleteProduct = async (_id) => {
         const res = await fetch(`http://localhost:3000/used-items/${_id}`, { method: 'DELETE' });
         const data = await res.json();
-
-        console.log(data);
 
         location.reload();
     };
@@ -51,7 +50,6 @@ const MyProduct = ({props: props}) => {
         if (prePrice.length > 4 && prePrice[0] === '0') {
             const removedZero = prePrice.split('');
             removedZero.shift();
-            console.log(removedZero);
             setPriceValue(removedZero.join(''));
             return;
         }
@@ -63,14 +61,13 @@ const MyProduct = ({props: props}) => {
 
         productContainer.current.children[1].innerHTML = 'Main Picture';
 
-        const oldDivTag = productContainer.current.children[2];
-        const newPictureInput = document.createElement('input');
-        newPictureInput.setAttribute('type', 'file');
-        oldDivTag.replaceWith(newPictureInput);
+        // const oldDivTag = productContainer.current.children[2];
+        // const newPictureInput = document.createElement('input');
+        // newPictureInput.setAttribute('type', 'file');
+        // oldDivTag.replaceWith(newPictureInput);
         
         const oldName = productContainer.current.children[4];
         const newNameInput = document.createElement('input');
-        newPictureInput.innerHTML = 'Hello';
         newNameInput.setAttribute('value', oldName.innerHTML);
         oldName.replaceWith(newNameInput);
 
@@ -92,21 +89,49 @@ const MyProduct = ({props: props}) => {
     const updateProduct = async (event) => {
         event.preventDefault();
 
+        const product_name = productContainer.current.children[4].value;
+
+        const description = productContainer.current.children[6].value;
+
+        const price = productContainer.current.children[8].value;
+
+        console.log(product_name, description, price);
+
         const res = await fetch(`http://localhost:3000/used-items/${props._id}`, {
             method: 'PATCH',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify()
+            body: JSON.stringify({
+                product_name, description, price
+            })
         });
         const data = await res.json();
 
         console.log(data.message);
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        console.log(formData);
+        
+        const picRes = await fetch(`http://localhost:3000/images/${props._id}`, {
+            method: 'POST',
+            body: formData
+        });
+    
+        const picData = await picRes.json();
+
+        location.reload();
     };
 
     return (
         <div ref={productContainer} className="see-my-product-container">
             <img src={props.main_picture?.url} alt={props.product_name} />
             <h5></h5>
-            <div></div>
+            {
+                update ?
+                    <input type='file' onChange={(e) => setFile(e.target.files[0])}/>
+                    : <div></div>
+            }
             <h5>Product Name</h5>
             <h4>{props.product_name}</h4>
             <h5>Description:</h5>

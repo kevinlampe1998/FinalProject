@@ -29,6 +29,7 @@ router.post('/set-used-item/:user_who_sells', async (req, res) => {
         const { user_who_sells } = req.params;
         if (!user_who_sells) {
             res.json({ message: 'user_who_sells is missing!', error: true });
+            return;
         }
 
         const existAlready = await UsedItem.findOne({ product_name });
@@ -100,6 +101,22 @@ router.patch('/:_id', async (req, res) => {
     try {
         console.log(req.body);
         console.log(req.params._id);
+
+        const { product_name, description, price } = req.body;
+        if (!product_name || !description || !price) {
+            res.json({ message: 'product_name, description or/and price is missing!', error: true });
+            return;
+        }
+        
+        const { _id } = req.params;
+        if (!_id) {
+            res.json({ message: 'Product id is missing!', error: true });
+            return;
+        }
+
+        const updatedUsedItem = await UsedItem.updateOne({ _id },
+            { product_name, description, price });
+        console.log(updatedUsedItem);
 
         res.json({ message: 'Your product is successful updated!' });
         return;
