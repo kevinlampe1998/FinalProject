@@ -4,22 +4,37 @@
     flex-direction: column;
     align-items: center;
 }
+
 .home h1 {
     padding: 20px;
 }
 
-/* .home-pics {
-    display: flex;
-    flex-wrap: wrap;
-    width: 1000px;
-    transform: matrix(1, -0.3, 0, 1, 0, 0);
-    z-index: -100;
-    position: relative;
-    margin: 100px 0;
+.rotating-welcome {
+    font-size: 2.5rem;
+    font-weight: bold;
+    animation: rotateText 3s infinite linear;
+    transform-origin: center;
+    display: inline-block;
+    padding: 20px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.home-pics img {
-    height: 200px;
-    width: 200px;
-    object-fit: cover;
-} */
+@keyframes rotateText {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(10deg);
+    }
+    75% {
+        transform: rotate(-10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* Rest des ursprünglichen CSS bleibt gleich */
