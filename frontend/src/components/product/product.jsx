@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import "./NewInStore.css";
+import "./product.css";
 import ThreeDExample from "../ThreeDExample/ThreeDExample";
 import { Search } from "lucide-react";
 
-const NewInStore = () => {
+const product = () => {
     const [customerName, setCustomerName] = useState("Guest");
     const [searchQuery, setSearchQuery] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
+    const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -24,7 +24,7 @@ const NewInStore = () => {
                 throw new Error("Fehler bei der Suche");
             }
             const data = await response.json();
-            setSearchResults(data);
+            setProducts(data);
         } catch (err) {
             setError("Fehler beim Laden der Produkte: " + err.message);
         } finally {
@@ -62,9 +62,9 @@ const NewInStore = () => {
             {error && <div className="error-message">{error}</div>}
 
             {/* Produktanzeige */}
-            {searchResults.length > 0 && (
+            {products.length > 0 && (
                 <div className="products-grid">
-                    {searchResults.map((product) => (
+                    {products.map((product) => (
                         <div key={product.id} className="product-card">
                             <div className="product-info">
                                 <h3>{product.modell}</h3>
@@ -120,11 +120,11 @@ const NewInStore = () => {
             )}
 
             {/* Keine Ergebnisse */}
-            {!loading && searchResults.length === 0 && searchQuery && (
+            {!loading && products.length === 0 && searchQuery && (
                 <div className="no-results">Keine Produkte gefunden</div>
             )}
         </section>
     );
 };
 
-export default NewInStore;
+export default product;
