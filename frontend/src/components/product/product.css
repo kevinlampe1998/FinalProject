@@ -1,0 +1,146 @@
+CSS Styles
+/* Bestehende Styles beibehalten */
+.home {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Neue Styles für die Suche */
+.search-section {
+    margin: 2rem 0;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+}
+
+.search-form {
+    display: flex;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.search-input-container {
+    position: relative;
+    flex-grow: 1;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+.search-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-button:hover {
+    background-color: #1d4ed8;
+}
+
+/* Produkt-Grid Styles */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.product-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background: white;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.product-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    color: #1f2937;
+}
+
+.manufacturer {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2563eb;
+    margin: 1rem 0;
+}
+
+.specs {
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+
+.specs p {
+    margin: 0.25rem 0;
+}
+
+/* Status-Anzeigen */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+}
+
+.error-message {
+    text-align: center;
+    padding: 1rem;
+    margin: 1rem 0;
+    background: #fee2e2;
+    color: #dc2626;
+    border-radius: 0.5rem;
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .search-form {
+        flex-direction: column;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+}
