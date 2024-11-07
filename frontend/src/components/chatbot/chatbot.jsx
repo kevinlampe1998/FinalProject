@@ -1,5 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Send, ShoppingCart, X, Loader } from "lucide-react";
+import io from "socket.io-client";
+
+// Beispiel für Socket.IO-Integration für Echtzeit-Kommunikation (wenn gewünscht)
+// const socket = io("http://localhost:5000");
 
 const HardwareShopBot = () => {
     const [messages, setMessages] = useState([]);
@@ -13,6 +17,11 @@ const HardwareShopBot = () => {
 
     useEffect(() => {
         fetchInitialData();
+        // Optional: Echtzeitnachrichten-Handling hinzufügen
+        // socket.on("newMessage", (message) => setMessages((prev) => [...prev, message]));
+        return () => {
+            // socket.off("newMessage");
+        };
     }, []);
 
     const fetchInitialData = async () => {
@@ -20,27 +29,23 @@ const HardwareShopBot = () => {
             const response = await fetch("/api/products/featured");
             const featuredProducts = await response.json();
             setProducts(featuredProducts);
-
             handleInitialMessage();
         } catch (error) {
-            console.error("Error fetching initial data:", error);
+            console.error("Fehler beim Laden der initialen Daten:", error);
         }
     };
 
     const handleInitialMessage = () => {
-        const welcomeMessage = {
-            text: "Willkommen! Ich bin Ihr Hardware-Berater. Wie kann ich Ihnen helfen?",
-            sender: "bot",
-        };
-        setMessages([welcomeMessage]);
-    };
-
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        setMessages([
+            {
+                text: "Willkommen! Ich bin Ihr Hardware-Berater. Wie kann ich Ihnen helfen?",
+                sender: "bot",
+            },
+        ]);
     };
 
     useEffect(() => {
-        scrollToBottom();
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
     const processMessage = async (userInput) => {
@@ -48,23 +53,18 @@ const HardwareShopBot = () => {
         try {
             const response = await fetch("/api/chat", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     message: userInput,
-                    context: messages.slice(-5), // Send last 5 messages for context
+                    context: messages.slice(-5),
                 }),
             });
-
-            if (!response.ok) throw new Error("Network response was not ok");
-
-            const data = await response.json();
-            return data;
+            if (!response.ok) throw new Error("Netzwerkfehler");
+            return await response.json();
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Fehler:", error);
             return {
-                text: "Entschuldigung, es gab ein technisches Problem. Bitte versuchen Sie es später noch einmal.",
+                text: "Es gab ein technisches Problem. Versuchen Sie es später erneut.",
                 products: [],
             };
         } finally {
@@ -77,27 +77,21 @@ const HardwareShopBot = () => {
             const response = await fetch(
                 `/api/products/search?q=${encodeURIComponent(query)}`
             );
-            const data = await response.json();
-            return data;
+            return await response.json();
         } catch (error) {
-            console.error("Error searching products:", error);
+            console.error("Fehler bei der Produktsuche:", error);
             return [];
         }
     };
 
     const addToCart = async (product) => {
         try {
-            const response = await fetch("/api/cart", {
+            await fetch("/api/cart", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ productId: product._id }),
             });
-
-            if (!response.ok) throw new Error("Failed to add to cart");
-
-            setCart([...cart, product]);
+            setCart((prev) => [...prev, product]);
             setMessages((prev) => [
                 ...prev,
                 {
@@ -106,11 +100,11 @@ const HardwareShopBot = () => {
                 },
             ]);
         } catch (error) {
-            console.error("Error adding to cart:", error);
+            console.error("Fehler beim Hinzufügen zum Warenkorb:", error);
             setMessages((prev) => [
                 ...prev,
                 {
-                    text: "Entschuldigung, das Produkt konnte nicht zum Warenkorb hinzugefügt werden.",
+                    text: "Das Produkt konnte nicht zum Warenkorb hinzugefügt werden.",
                     sender: "bot",
                 },
             ]);
@@ -119,15 +113,10 @@ const HardwareShopBot = () => {
 
     const removeFromCart = async (productId) => {
         try {
-            const response = await fetch(`/api/cart/${productId}`, {
-                method: "DELETE",
-            });
-
-            if (!response.ok) throw new Error("Failed to remove from cart");
-
-            setCart(cart.filter((item) => item._id !== productId));
+            await fetch(`/api/cart/${productId}`, { method: "DELETE" });
+            setCart((prev) => prev.filter((item) => item._id !== productId));
         } catch (error) {
-            console.error("Error removing from cart:", error);
+            console.error("Fehler beim Entfernen aus dem Warenkorb:", error);
         }
     };
 
@@ -192,10 +181,52 @@ const HardwareShopBot = () => {
         </div>
     );
 
-    // Rest des UI-Codes bleibt größtenteils gleich...
     return (
         <div className="fixed bottom-4 right-4 z-50">
-            {/* ... bisheriger UI-Code ... */}
+            <div className="chatbot-container">
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="chatbot-toggle"
+                >
+                    {isOpen ? <X /> : <ShoppingCart />}
+                </button>
+                {isOpen && (
+                    <div className="chatbot-content">
+                        <div className="message-list">
+                            {messages.map((msg, index) => (
+                                <div
+                                    key={index}
+                                    className={`message ${msg.sender}`}
+                                >
+                                    {msg.text}
+                                    {msg.products &&
+                                        msg.products.map((product) => (
+                                            <ProductCard
+                                                key={product._id}
+                                                product={product}
+                                            />
+                                        ))}
+                                </div>
+                            ))}
+                            <div ref={messagesEndRef} />
+                        </div>
+                        <div className="message-input">
+                            <input
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={(e) =>
+                                    e.key === "Enter" && handleSend()
+                                }
+                                placeholder="Nachricht eingeben..."
+                            />
+                            <button onClick={handleSend} disabled={loading}>
+                                {loading ? <Loader /> : <Send />}
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

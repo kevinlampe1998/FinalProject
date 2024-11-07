@@ -1,5 +1,15 @@
-CSS Styles
-/* Bestehende Styles beibehalten */
+:root {
+    --primary-color: #2563eb;
+}
+
+.search-button {
+    background-color: var(--primary-color);
+}
+
+.price {
+    color: var(--primary-color);
+}
+
 .home {
     padding: 2rem;
     max-width: 1200px;

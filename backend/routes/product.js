@@ -1,39 +1,62 @@
 import express from "express";
 import Product from "../models/product.js";
+import fs from "fs";
 
 const router = express.Router();
 
-// GET /api/products/search
-router.get("/search", async (req, res) => {
+// DELETE /api/products/:id - Delete a product by ID
+router.delete("/:id", async (req, res) => {
     try {
-        const { query } = req.query;
+        const { id } = req.params;
+        const deletedProduct = await Product.findByIdAndDelete(id);
 
-        if (!query) {
-            return res.json([]);
+        if (!deletedProduct) {
+            return res.status(404).json({ message: "Product not found" });
         }
 
-        const products = await Product.find({
-            $or: [
-                { hersteller: { $regex: query, $options: "i" } },
-                { modell: { $regex: query, $options: "i" } },
-                {
-                    "spezifikationen.prozessor.name": {
-                        $regex: query,
-                        $options: "i",
-                    },
-                },
-                {
-                    "spezifikationen.grafik.name": {
-                        $regex: query,
-                        $options: "i",
-                    },
-                },
-            ],
-        });
-
-        res.json(products);
+        res.json({ message: "Product deleted successfully" });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ message: "Server error", error });
+    }
+});
+
+// PUT /api/products/:id - Update a product by ID
+router.put("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedData = req.body;
+
+        const updatedProduct = await Product.findByIdAndUpdate(
+            id,
+            updatedData,
+            { new: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        res.json(updatedProduct);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+});
+
+// POST /api/products/many - Insert multiple products from a .json file
+router.post("/many", async (req, res) => {
+    try {
+        const productsData = JSON.parse(
+            fs.readFileSync("path/to/products.json", "utf-8")
+        );
+
+        const insertedProducts = await Product.insertMany(productsData);
+
+        res.json({
+            message: "Products inserted successfully",
+            insertedProducts,
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
     }
 });
 

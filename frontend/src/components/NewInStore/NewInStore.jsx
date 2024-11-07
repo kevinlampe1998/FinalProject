@@ -1,130 +1,82 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./NewInStore.css";
-import ThreeDExample from "../ThreeDExample/ThreeDExample";
-import { Search } from "lucide-react";
 
 const NewInStore = () => {
-    const [customerName, setCustomerName] = useState("Guest");
-    const [searchQuery, setSearchQuery] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Suchfunktion für MongoDB
-    const handleSearch = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError(null);
+    // Daten laden, wenn Komponente gemountet wird
+    useEffect(() => {
+        fetchProducts();
+    }, []);
 
+    // Funktion zum Abrufen der Produktdaten
+    const fetchProducts = async () => {
+        setLoading(true);
+        setError(null); // Fehler zurücksetzen
         try {
-            const response = await fetch(
-                `/api/products/search?query=${searchQuery}`
-            );
-            if (!response.ok) {
-                throw new Error("Fehler bei der Suche");
-            }
+            const response = await fetch("/api/products/new");
+            if (!response.ok)
+                throw new Error("Daten konnten nicht geladen werden");
             const data = await response.json();
-            setSearchResults(data);
+            setProducts(data);
         } catch (err) {
-            setError("Fehler beim Laden der Produkte: " + err.message);
+            setError(err.message);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <section className="home">
-            <p className="rotating-welcome">Welcome {customerName}</p>
-            <h1>Welcome to Tech Oase</h1>
-            <ThreeDExample />
+        <div className="home">
+            <h1 className="rotating-welcome">
+                Willkommen zu Neu im Sortiment!
+            </h1>
 
-            {/* Suchformular */}
-            <div className="search-section">
-                <form onSubmit={handleSearch} className="search-form">
-                    <div className="search-input-container">
-                        <Search className="search-icon" size={20} />
-                        <input
-                            type="text"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Suche nach Laptops..."
-                            className="search-input"
-                        />
-                    </div>
-                    <button type="submit" className="search-button">
-                        Suchen
-                    </button>
-                </form>
-            </div>
+            {loading && <div className="loading">Lädt...</div>}
+            {error && <div className="error">{error}</div>}
+            {!loading && !error && products.length === 0 && (
+                <div className="no-results">Keine neuen Produkte gefunden.</div>
+            )}
 
-            {/* Loading und Error States */}
-            {loading && <div className="loading">Suche Produkte...</div>}
-            {error && <div className="error-message">{error}</div>}
-
-            {/* Produktanzeige */}
-            {searchResults.length > 0 && (
+            <section className="products-section">
                 <div className="products-grid">
-                    {searchResults.map((product) => (
-                        <div key={product.id} className="product-card">
-                            <div className="product-info">
-                                <h3>{product.modell}</h3>
-                                <p className="manufacturer">
-                                    {product.hersteller}
+                    {products.map((product) => (
+                        <div key={product._id} className="product-card">
+                            <div className="product-header">
+                                <h2 className="product-title">
+                                    {product.name}
+                                </h2>
+                                <p className="product-manufacturer">
+                                    {product.manufacturer}
                                 </p>
-                                <p className="price">
-                                    {product.preis.toLocaleString("de-DE", {
-                                        style: "currency",
-                                        currency: "EUR",
-                                    })}
+                            </div>
+                            <div className="product-content">
+                                <p className="product-price">
+                                    {product.price} €
                                 </p>
-                                <div className="specs">
-                                    <p>
-                                        <strong>CPU:</strong>{" "}
-                                        {product.spezifikationen.prozessor.name}
-                                    </p>
-                                    <p>
-                                        <strong>RAM:</strong>{" "}
-                                        {
-                                            product.spezifikationen
-                                                .arbeitsspeicher.groesse
-                                        }
-                                        GB{" "}
-                                        {
-                                            product.spezifikationen
-                                                .arbeitsspeicher.typ
-                                        }
-                                    </p>
-                                    <p>
-                                        <strong>Display:</strong>{" "}
-                                        {
-                                            product.spezifikationen.bildschirm
-                                                .groesse
-                                        }
-                                        "{" "}
-                                        {product.spezifikationen.bildschirm.typ}
-                                    </p>
-                                    {product.spezifikationen.grafik && (
-                                        <p>
-                                            <strong>GPU:</strong>{" "}
-                                            {
-                                                product.spezifikationen.grafik
-                                                    .name
-                                            }
+                                <div className="product-specs">
+                                    {product.specs.map((spec, index) => (
+                                        <p key={index}>
+                                            <span>{spec.label}:</span>{" "}
+                                            {spec.value}
                                         </p>
-                                    )}
+                                    ))}
                                 </div>
+                                <button
+                                    className="product-button"
+                                    aria-label={`Mehr Details zu ${product.name}`}
+                                >
+                                    Details ansehen
+                                </button>
                             </div>
                         </div>
                     ))}
                 </div>
-            )}
-
-            {/* Keine Ergebnisse */}
-            {!loading && searchResults.length === 0 && searchQuery && (
-                <div className="no-results">Keine Produkte gefunden</div>
-            )}
-        </section>
+            </section>
+        </div>
     );
 };
 
-export default NewInStore;
+export default React.memo(NewInStore);
