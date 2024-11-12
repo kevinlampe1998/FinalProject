@@ -12,6 +12,7 @@ import helpChatRoute from "./routes/helpChat.js";
 import newInStoreRoute from "./routes/newInStore.js";
 import usedShoppingCartRoute from "./routes/usedShoppingCart.js";
 import adminRoute from "./routes/admin.js";
+import productRouter from "./routes/product.js";
 
 dotenv.config();
 const env = process.env;
