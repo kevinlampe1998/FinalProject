@@ -12,6 +12,7 @@ import helpChatRoute from "./routes/helpChat.js";
 import newInStoreRoute from "./routes/newInStore.js";
 import usedShoppingCartRoute from "./routes/usedShoppingCart.js";
 import adminRoute from "./routes/admin.js";
+import productRouter from "./routes/product.js";
 
 dotenv.config();
 const env = process.env;
@@ -40,6 +41,7 @@ app.use("/help-chat", helpChatRoute);
 app.use("/new-in-store", newInStoreRoute);
 app.use("/used-shopping-cart", usedShoppingCartRoute);
 app.use("/api/products", productRouter);
+app.use('/api/admins', adminRoute);
 
 app.listen(env.PORT, () => {
     console.log(`Server started on http://localhost:${env.PORT}`);
